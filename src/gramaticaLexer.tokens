@@ -25,6 +25,7 @@ STR=24
 ACOL=25
 FCOL=26
 OP_REL=27
+ERROR=28
 'use'=1
 'main'=3
 'def'=4

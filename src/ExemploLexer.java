@@ -23,7 +23,7 @@ public class ExemploLexer {
     }
 
     public static void  main (String[] args){
-        String filename = "/home/joaogkz/IdeaProjects/projeto_parte1/codigo.txt";
+        String filename = "/home/joaogkz/IdeaProjects/analisador_lexico/codigo.txt";
         try {
             CharStream input = CharStreams.fromFileName(filename);
             gramaticaLexer lexer = new gramaticaLexer(input);
