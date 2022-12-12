@@ -6,8 +6,11 @@ fragment DIGITO: [0-9];
 // Incluir bibliotecas
 USE: 'use';
 
+// Comentário
+COMMENT: '/*' .* '*/';
+
 // Tipos primitivos
-TIPO: 'int' | 'float' | 'void';
+TIPO: 'int' | 'float' | 'void' | 'double' | 'str';
 
 // Função principal
 MAIN: 'main';
