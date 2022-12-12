@@ -11,6 +11,8 @@ def funcao() :: void {
     print(j);
 }
 
+/* Teste de comentario */
+
 def main() :: int {
     int x = 10;
     float y = 10/3;
