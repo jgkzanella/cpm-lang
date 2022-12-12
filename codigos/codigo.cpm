@@ -1,6 +1,6 @@
 use "stdio";
 
-def funcao :: void {
+def funcao() :: void {
     int i = 0;
     int j = 1;
     while(i < 10) {

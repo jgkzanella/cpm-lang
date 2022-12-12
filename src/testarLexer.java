@@ -3,10 +3,13 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.Token;
 
 import java.io.IOException;
+import java.util.Scanner;
 
-public class ExemploLexer {
+public class testarLexer {
 
-    public static void imprimir_lexema(gramaticaLexer lexer, Token token) {
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void imprimir_lexema(cpmLexer lexer, Token token) {
         System.out.println("Lexema: " + token.getText());
         System.out.println("    Classe: " + lexer.getVocabulary().getDisplayName(token.getType()));
         System.out.println("    Linha:  " + token.getLine());
@@ -23,10 +26,11 @@ public class ExemploLexer {
     }
 
     public static void  main (String[] args){
-        String filename = "/home/joaogkz/IdeaProjects/analisador_lexico/codigo.txt";
+        System.out.print("Entre o código fonte: ");
+        String filename = "./codigos/" + scanner.nextLine();
         try {
             CharStream input = CharStreams.fromFileName(filename);
-            gramaticaLexer lexer = new gramaticaLexer(input);
+            cpmLexer lexer = new cpmLexer(input);
             Token token;
             while (!lexer._hitEOF) {
                 token = lexer.nextToken();
