@@ -77,7 +77,7 @@ NUM_FLOAT: ('-' | '+')?DIGITO+('.'DIGITO+) ;
 STR: '"' ('\\' ["\\] | ~["\\\r\n])* '"' ;
 
 // Nome de variáveis e funções
-VARIAVEL: (LETRA | '_')(DIGITO | LETRA | '_')* ;
+ID: (LETRA | '_')(DIGITO | LETRA | '_')* ;
 
 // Caracteres inúteis
 WS: [ \r\t\n]* -> skip ;
@@ -126,6 +126,8 @@ bloco:
    '{'
    (
     bloco
+    | vetor
+    | funcao
     | expressao ';'
     | declaracao
     | repeticao
@@ -146,15 +148,20 @@ bloco:
 // Necessário para não causar recursão à esquerda nas expressões
 // Mudar nome
 tipos_primitivos:
-    NUM_FLOAT | NUM_INT | STR | VARIAVEL | vetor | BOOL
+    NUM_FLOAT | NUM_INT | STR | ID | BOOL | funcao | vetor
     ;
 
 tipos_atribuicao:
     tipos_primitivos
-    | expressao_aritmetica
-    | expressao_logica
-    | expressao_relacional
-    | funcao
+    | expressao
+    ;
+
+parametro:
+    ((tipos_primitivos | expressao) (',' (tipos_primitivos | expressao))*)
+    ;
+
+indice:
+    (NUM_INT | ID | vetor | funcao | expressao)
     ;
 
 termo_aritmetico:
@@ -170,7 +177,7 @@ termo_logico:
     ;
 
 fator_logico:
-    VARIAVEL | vetor | BOOL | '(' expressao_logica ')'
+    ID | vetor | BOOL | '(' expressao_logica ')'
     ;
 
 termo_relacional:
@@ -216,16 +223,16 @@ declaracao:
     ;
 
 declaracao_variavel:
-    TIPO VARIAVEL ('=' tipos_atribuicao)?
+    TIPO ID ('=' tipos_atribuicao)?
     ;
 
 declaracao_vetor:
-    TIPO '[' (NUM_INT | VARIAVEL | vetor) ']'
+    TIPO '[' (NUM_INT | ID | vetor) ']'
     ;
 
 declaracao_funcao:
-    DEF VARIAVEL '(' (TIPO VARIAVEL (',' TIPO VARIAVEL)*) ')' '::' TIPO  bloco |
-    DEF VARIAVEL '()' '::' TIPO  bloco  // Gambiarra
+    DEF ID '(' (TIPO ID (',' TIPO ID)*) ')' '::' TIPO  bloco |
+    DEF ID '()' '::' TIPO  bloco  // Gambiarra
     ;
 
 /*
@@ -243,7 +250,7 @@ repeticao_while:
     ;
 
 repeticao_for:
-    FOR '(' declaracao_variavel ';' expressao ';' (VARIAVEL (MAISMAIS | MAISMENOS | MENOSMENOS)) ')' bloco
+    FOR '(' declaracao_variavel ';' expressao ';' (ID (MAISMAIS | MAISMENOS | MENOSMENOS)) ')' bloco
     ;
 
 /*
@@ -275,16 +282,16 @@ condicional_else:
 */
 
 chamada:
-    funcao
-    | atribuicao
+    chamada_funcao
+    | chamada_atribuicao
     ;
 
-funcao:
-    VARIAVEL '(' (tipos_atribuicao | /*vazio*/) ')'
+chamada_funcao:
+    ID '(' (tipos_atribuicao | /*vazio*/) ')'
     ;
 
-atribuicao:
-    (VARIAVEL | vetor) '=' tipos_atribuicao
+chamada_atribuicao:
+    (ID | vetor) '=' tipos_atribuicao
     ;
 
 /*
@@ -297,7 +304,11 @@ importar:
     ;
 
 vetor:
-    VARIAVEL '[' (NUM_INT | VARIAVEL | vetor) ']'
+    ID '[' indice ']'
+    ;
+
+funcao:
+    ID '(' parametro ')'
     ;
 
 retornar:

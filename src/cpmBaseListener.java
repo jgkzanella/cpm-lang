@@ -40,13 +40,13 @@ public class cpmBaseListener implements cpmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDeclaracoes_externas(cpmParser.Declaracoes_externasContext ctx) { }
+	@Override public void enterGlobal(cpmParser.GlobalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDeclaracoes_externas(cpmParser.Declaracoes_externasContext ctx) { }
+	@Override public void exitGlobal(cpmParser.GlobalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -83,6 +83,30 @@ public class cpmBaseListener implements cpmListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTipos_atribuicao(cpmParser.Tipos_atribuicaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterParametro(cpmParser.ParametroContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParametro(cpmParser.ParametroContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIndice(cpmParser.IndiceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIndice(cpmParser.IndiceContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -352,25 +376,25 @@ public class cpmBaseListener implements cpmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFuncao(cpmParser.FuncaoContext ctx) { }
+	@Override public void enterChamada_funcao(cpmParser.Chamada_funcaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFuncao(cpmParser.FuncaoContext ctx) { }
+	@Override public void exitChamada_funcao(cpmParser.Chamada_funcaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAtribuicao(cpmParser.AtribuicaoContext ctx) { }
+	@Override public void enterChamada_atribuicao(cpmParser.Chamada_atribuicaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAtribuicao(cpmParser.AtribuicaoContext ctx) { }
+	@Override public void exitChamada_atribuicao(cpmParser.Chamada_atribuicaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -395,6 +419,18 @@ public class cpmBaseListener implements cpmListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitVetor(cpmParser.VetorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFuncao(cpmParser.FuncaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFuncao(cpmParser.FuncaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

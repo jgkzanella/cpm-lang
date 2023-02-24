@@ -27,15 +27,15 @@ public interface cpmListener extends ParseTreeListener {
 	 */
 	void exitFuncao_principal(cpmParser.Funcao_principalContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link cpmParser#declaracoes_externas}.
+	 * Enter a parse tree produced by {@link cpmParser#global}.
 	 * @param ctx the parse tree
 	 */
-	void enterDeclaracoes_externas(cpmParser.Declaracoes_externasContext ctx);
+	void enterGlobal(cpmParser.GlobalContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link cpmParser#declaracoes_externas}.
+	 * Exit a parse tree produced by {@link cpmParser#global}.
 	 * @param ctx the parse tree
 	 */
-	void exitDeclaracoes_externas(cpmParser.Declaracoes_externasContext ctx);
+	void exitGlobal(cpmParser.GlobalContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link cpmParser#bloco}.
 	 * @param ctx the parse tree
@@ -66,6 +66,26 @@ public interface cpmListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTipos_atribuicao(cpmParser.Tipos_atribuicaoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link cpmParser#parametro}.
+	 * @param ctx the parse tree
+	 */
+	void enterParametro(cpmParser.ParametroContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link cpmParser#parametro}.
+	 * @param ctx the parse tree
+	 */
+	void exitParametro(cpmParser.ParametroContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link cpmParser#indice}.
+	 * @param ctx the parse tree
+	 */
+	void enterIndice(cpmParser.IndiceContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link cpmParser#indice}.
+	 * @param ctx the parse tree
+	 */
+	void exitIndice(cpmParser.IndiceContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link cpmParser#termo_aritmetico}.
 	 * @param ctx the parse tree
@@ -287,25 +307,25 @@ public interface cpmListener extends ParseTreeListener {
 	 */
 	void exitChamada(cpmParser.ChamadaContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link cpmParser#funcao}.
+	 * Enter a parse tree produced by {@link cpmParser#chamada_funcao}.
 	 * @param ctx the parse tree
 	 */
-	void enterFuncao(cpmParser.FuncaoContext ctx);
+	void enterChamada_funcao(cpmParser.Chamada_funcaoContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link cpmParser#funcao}.
+	 * Exit a parse tree produced by {@link cpmParser#chamada_funcao}.
 	 * @param ctx the parse tree
 	 */
-	void exitFuncao(cpmParser.FuncaoContext ctx);
+	void exitChamada_funcao(cpmParser.Chamada_funcaoContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link cpmParser#atribuicao}.
+	 * Enter a parse tree produced by {@link cpmParser#chamada_atribuicao}.
 	 * @param ctx the parse tree
 	 */
-	void enterAtribuicao(cpmParser.AtribuicaoContext ctx);
+	void enterChamada_atribuicao(cpmParser.Chamada_atribuicaoContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link cpmParser#atribuicao}.
+	 * Exit a parse tree produced by {@link cpmParser#chamada_atribuicao}.
 	 * @param ctx the parse tree
 	 */
-	void exitAtribuicao(cpmParser.AtribuicaoContext ctx);
+	void exitChamada_atribuicao(cpmParser.Chamada_atribuicaoContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link cpmParser#importar}.
 	 * @param ctx the parse tree
@@ -326,6 +346,16 @@ public interface cpmListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVetor(cpmParser.VetorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link cpmParser#funcao}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncao(cpmParser.FuncaoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link cpmParser#funcao}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncao(cpmParser.FuncaoContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link cpmParser#retornar}.
 	 * @param ctx the parse tree

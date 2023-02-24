@@ -20,7 +20,7 @@ public class cpmLexer extends Lexer {
 		IF=10, IFSE=11, ELSE=12, WHILE=13, FOR=14, SEP_RE=15, SEP_EX=16, AC=17, 
 		FC=18, AP=19, FP=20, ACOL=21, FCOL=22, OP_LOG=23, ATR=24, MAISMENOS=25, 
 		MAISMAIS=26, MENOSMENOS=27, OP_ARIT=28, OP_REL=29, NUM_INT=30, NUM_FLOAT=31, 
-		STR=32, VARIAVEL=33, WS=34, ERROR=35;
+		STR=32, ID=33, WS=34, ERROR=35;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
 	};
@@ -35,7 +35,7 @@ public class cpmLexer extends Lexer {
 			"DEF", "MAIN", "RETURN", "IF", "IFSE", "ELSE", "WHILE", "FOR", "SEP_RE", 
 			"SEP_EX", "AC", "FC", "AP", "FP", "ACOL", "FCOL", "OP_LOG", "ATR", "MAISMENOS", 
 			"MAISMAIS", "MENOSMENOS", "OP_ARIT", "OP_REL", "NUM_INT", "NUM_FLOAT", 
-			"STR", "VARIAVEL", "WS", "ERROR"
+			"STR", "ID", "WS", "ERROR"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -53,7 +53,7 @@ public class cpmLexer extends Lexer {
 			null, null, null, "USE", "COMMENT", "TIPO", "BOOL", "DEF", "MAIN", "RETURN", 
 			"IF", "IFSE", "ELSE", "WHILE", "FOR", "SEP_RE", "SEP_EX", "AC", "FC", 
 			"AP", "FP", "ACOL", "FCOL", "OP_LOG", "ATR", "MAISMENOS", "MAISMAIS", 
-			"MENOSMENOS", "OP_ARIT", "OP_REL", "NUM_INT", "NUM_FLOAT", "STR", "VARIAVEL", 
+			"MENOSMENOS", "OP_ARIT", "OP_REL", "NUM_INT", "NUM_FLOAT", "STR", "ID", 
 			"WS", "ERROR"
 		};
 	}
