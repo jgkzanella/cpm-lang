@@ -1,4 +1,4 @@
-# Linguagem C Mais ou Menos - **C** **P**lus **M**inus (**CPM**)
+# <center> Linguagem C Mais ou Menos - **C** **P**lus **M**inus (**CPM**) </center>
 
 <center>
 
@@ -61,7 +61,7 @@ Alguns algoritmos elaborados em C+-:
         return 0;
     }
 
-## 2. Definição Léxica: lexemas aceitos, classes de lexemas e seus padrões de identificação
+## 2. Definição Léxica
 
 Classe | Sigla | Padrão
 -------|-------|-------
@@ -95,165 +95,178 @@ Números inteiros | NUM_INT | Sequência de dígitos que, opcionalmente, iniciar
 Números reais | NUM_FLOAT | Sequência de dígitos que, opcionalmente, iniciar ou com um símbolo negativo ou um símbolo positivo seguidas de um ponto e outra sequência de dígitos
 Cadeias de caracteres (strings) | STR | Cadeia de caracteres delimitados por aspas duplas
 
-## 3. Casos de Teste
+## 3. Definição Sintática
 
-### 3.1 hello_world.cpm sem erro
 
-    use "stdio";
 
-    def main() :: int {
-        print("Hello, World!");
-        return 0;
-    }
+## 4. Casos de Teste
 
-O código acima sem nenhum erro gera a seguinte saída de tokens:
+### 4.1 hello_world.cpm
 
-    Lexema: use
-        Classe: 'use'
-        Linha: 1
-    Lexema: "stdio"
-        Classe: STR
-        Linha: 1
-    Lexema: ;
-        Classe: ';'
-        Linha: 1
-    Lexema: def
-        Classe: 'def'
-        Linha: 3
-    Lexema: main
-        Classe: 'main'
-        Linha: 3
-    Lexema: (
-        Classe: '('
-        Linha: 3
-    Lexema: )
-        Classe: ')'
-        Linha: 3
-    Lexema: ::
-        Classe: '::'
-        Linha: 3
-    Lexema: int
-        Classe: TIPO
-        Linha: 3
-    Lexema: {
-        Classe: '{'
-        Linha: 3
-    Lexema: print
-        Classe: ID
-        Linha: 5
-    Lexema: (
-        Classe: '('
-        Linha: 5
-    Lexema: "Hello, World!"
-        Classe: STR
-        Linha: 5
-    Lexema: )
-        Classe: ')'
-        Linha: 5
-    Lexema: ;
-        Classe: ';'
-        Linha: 5
-    Lexema: return
-        Classe: 'return'
-        Linha: 7
-    Lexema: 0
-        Classe: NUM_INT
-        Linha: 7
-    Lexema: ;
-        Classe: ';'
-        Linha: 7
-    Lexema: }
-        Classe: '}'
-        Linha: 8
-    Lexema: <EOF>
-        Classe: EOF
-        Linha: 9
+- Sem erro
 
-### 3.2. hello_world.cpm com erro
+        use "stdio";
 
-    use "stdio";
-    deaf main() :: int {
-        print(~"Hello, World!");
-        return 0;
-    }
+        def main() :: int {
+            print("Hello, World!");
+            return 0;
+        }
 
-O código acima com dois erros, um sintático em “deaf” ao invés de “def” e um léxico com a presença de um lexema não identificável “~”, gera a seguinte saída de tokens:
+    O código sem nenhum erro gera a seguinte saída de tokens:
 
-    Lexema: use
-        Classe: 'use'
-        Linha: 1
-    Lexema: "stdio"
-        Classe: STR
-        Linha: 1
-    Lexema: ;
-        Classe: ';'
-        Linha: 1
-    Lexema: deaf
-        Classe: ID
-        Linha: 3
-    Lexema: main
-        Classe: 'main'
-        Linha: 3
-    Lexema: (
-        Classe: '('
-        Linha: 3
-    Lexema: )
-        Classe: ')'
-        Linha: 3
-    Lexema: ::
-        Classe: '::'
-        Linha: 3
-    Lexema: int
-        Classe: TIPO
-        Linha: 3
-    Lexema: {
-        Classe: '{'
-        Linha: 3
-    Lexema: print
-        Classe: ID
-        Linha: 5
-    Lexema: (
-        Classe: '('
-        Linha: 5
-    ==========================================
-    Lexema invalido identificado!
-        Lexema: ~
-        Linha: 5
-        Inicio: 46
-        Fim: 46
-    ==========================================
-    Lexema: "Hello, World!"
-        Classe: STR
-        Linha: 5
-    Lexema: )
-        Classe: ')'
-        Linha: 5
-    Lexema: ;
-        Classe: ';'
-        Linha: 5
-    Lexema: return
-        Classe: 'return'
-        Linha: 7
-    Lexema: 0
-        Classe: NUM_INT
-        Linha: 7
-    Lexema: ;
-        Classe: ';'
-        Linha: 7
-    Lexema: }
-        Classe: '}'
-        Linha: 8
-    Lexema: <EOF>
-        Classe: EOF
-        Linha: 9
+        Lexema: use
+            Classe: 'use'
+            Linha: 1
+        Lexema: "stdio"
+            Classe: STR
+            Linha: 1
+        Lexema: ;
+            Classe: ';'
+            Linha: 1
+        Lexema: def
+            Classe: 'def'
+            Linha: 3
+        Lexema: main
+            Classe: 'main'
+            Linha: 3
+        Lexema: (
+            Classe: '('
+            Linha: 3
+        Lexema: )
+            Classe: ')'
+            Linha: 3
+        Lexema: ::
+            Classe: '::'
+            Linha: 3
+        Lexema: int
+            Classe: TIPO
+            Linha: 3
+        Lexema: {
+            Classe: '{'
+            Linha: 3
+        Lexema: print
+            Classe: ID
+            Linha: 5
+        Lexema: (
+            Classe: '('
+            Linha: 5
+        Lexema: "Hello, World!"
+            Classe: STR
+            Linha: 5
+        Lexema: )
+            Classe: ')'
+            Linha: 5
+        Lexema: ;
+            Classe: ';'
+            Linha: 5
+        Lexema: return
+            Classe: 'return'
+            Linha: 7
+        Lexema: 0
+            Classe: NUM_INT
+            Linha: 7
+        Lexema: ;
+            Classe: ';'
+            Linha: 7
+        Lexema: }
+            Classe: '}'
+            Linha: 8
+        Lexema: <EOF>
+            Classe: EOF
+            Linha: 9
 
-## 4. Detalhes da Implementação
+    Gera a seguinte árvore sintática:
+
+    <img src="./images/hello_word-tree.png" height="300">
+
+- Com erro
+
+    Um erro sintático em `returm` ao invés de `return` e um erro léxico com a presença de um lexema não identificável “~”)
+
+        use "stdio";
+
+        def main() :: int {
+            print(~"Hello, World!");
+            returm 0;
+        }
+
+    Gera a seguinte saída de tokens:
+
+        Lexema: use
+            Classe: 'use'
+            Linha:  1
+        Lexema: "stdio"
+            Classe: STR
+            Linha:  1
+        Lexema: ;
+            Classe: ';'
+            Linha:  1
+        Lexema: def
+            Classe: 'def'
+            Linha:  3
+        Lexema: main
+            Classe: 'main'
+            Linha:  3
+        Lexema: ()
+            Classe: '()'
+            Linha:  3
+        Lexema: ::
+            Classe: '::'
+            Linha:  3
+        Lexema: int
+            Classe: TIPO
+            Linha:  3
+        Lexema: {
+            Classe: '{'
+            Linha:  3
+        Lexema: print
+            Classe: VARIAVEL
+            Linha:  4
+        Lexema: (
+            Classe: '('
+            Linha:  4
+
+        ==========================================
+        Lexema invalido identificado!
+            Lexema: ~
+            Linha:  4
+            Inicio: 44
+            Fim:    44
+        ==========================================
+
+        Lexema: "Hello, World!"
+            Classe: STR
+            Linha:  4
+        Lexema: )
+            Classe: ')'
+            Linha:  4
+        Lexema: ;
+            Classe: ';'
+            Linha:  4
+        Lexema: returm
+            Classe: VARIAVEL
+            Linha:  5
+        Lexema: 0
+            Classe: NUM_INT
+            Linha:  5
+        Lexema: ;
+            Classe: ';'
+            Linha:  5
+        Lexema: }
+            Classe: '}'
+            Linha:  6
+
+    Gera a seguinte árvore sintática:
+
+    <img src="./images/hello_word-erros.png" height="300">
+
+## 5. Detalhes da Implementação
 
 A equipe gerou os algoritmos de exemplo (arquivos do diretório “codigos”), “cpm.g4”,
 “testarLexer.java”, “README.md” e “.gitignore”. O restante dos arquivos foi gerado utilizando o
 ANTLR.
 
-### 4.1. Algoritmos de exemplo
+### 5.1. Algoritmos de exemplo
 
 Foram gerados cinco códigos de exemplo para o analisador léxico. Todos são individuais e
 demonstram alguma característica diferente dos outros.
@@ -346,7 +359,7 @@ demonstram alguma característica diferente dos outros.
             return 0;
         }
 
-4.2. Gerador de Gramática
+5.2. Gerador de Gramática
 
 O código abaixo foi usado para gerar os tokens dos algoritmos de exemplo. Nele estão definidos as classes e suas expressões regulares.
 
@@ -425,7 +438,7 @@ O código abaixo foi usado para gerar os tokens dos algoritmos de exemplo. Nele 
     // Erro
     ERROR: . ;
 
-### 4.3. Análise Léxica
+### 5.3. Análise Léxica
 
 O código abaixo foi usado para imprimir o resultado da análise léxica dos algoritmos de exemplo. Nele estão sendo impressos os lexemas, juntamente com sua classe e linha que está presente. Também, em caso de lexema inválido, é chamada a função para imprimir uma mensagem de erro informando qual o lexema não identificado, a linha e os índices de início e fim do mesmo. Para ler um algoritmo de exemplo e fazer a análise léxica, é feita uma leitura do nome do arquivo desejável.
 
@@ -481,6 +494,24 @@ O código abaixo foi usado para imprimir o resultado da análise léxica dos alg
         }
     }
 
-## 5. Repositório no GitHub
+## 6. Repositório no GitHub
 
 A implementação do analisador léxico está disponível em: https://github.com/jgkzanella/analisador-lexico-cpm.
+
+## Ambiente
+
+- Toda a implementação foi desenvolvida e testada em sistema Linux utilizando JDK.
+
+      sudo apt install default-jdk
+
+- Para gerar o analisador léxico e o parser:
+
+      java -jar ./antlr-4.11.1-complete.jar ./src/cpm.g4
+
+- Os códigos fontes da linguagem CPM devem estar no diretório ```./codigos/``` para teste.
+
+- Testando o lexer:
+
+  - Compilar e executar `./src/testarLexer.java` utilizando a dependência `antlr-4.11.1-complete.jar`.
+
+  - Digitar o nome de um arquivo de código fonte da pasta `./codigos/`. Exemplo: `hello_world.cpm`
