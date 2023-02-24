@@ -129,8 +129,8 @@ primitivos:
     ;
 
 expressao_aritmetica:
-    '(' (primitivos | VARIAVEL | expressao_aritmetica) OP_ARIT (expressao_aritmetica | primitivos | VARIAVEL) ')' |
-        (primitivos | VARIAVEL | expressao_aritmetica) OP_ARIT (expressao_aritmetica | primitivos | VARIAVEL)     |
+    '(' (primitivos | VARIAVEL ) OP_ARIT (expressao_aritmetica | primitivos | VARIAVEL) ')' |
+        (primitivos | VARIAVEL ) OP_ARIT (expressao_aritmetica | primitivos | VARIAVEL)     |
         VARIAVEL (MAISMAIS | MAISMENOS | MENOSMENOS) ';'
     ;
 
