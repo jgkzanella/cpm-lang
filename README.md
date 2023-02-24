@@ -1,18 +1,16 @@
-# <p><center> Linguagem C Mais ou Menos - **C** **P**lus **M**inus (**CPM**) </center></p>
+# <center> Linguagem C Mais ou Menos - **C** **P**lus **M**inus (**CPM**) </center>
 
-<p><center>Henrique Curi de Miranda - 202020087
+<center>
+
+Henrique Curi de Miranda - 202020087
 
 João Gabriel Kondarzewski Zanella - 202020091
 
 Nathan Felipe de Assis - 202020774
 
-Victor Gonçalves Lima - 202020775</center></p>
+Victor Gonçalves Lima - 202020775
 
-## 0. Ambiente
-
-Para gerar o analisador léxico e o parser, digitar o comando:
-
-    java -jar ./antlr-4.11.1-complete.jar ./src/cpm.g4
+</center>
 
 ## 1. Visão Geral
 
@@ -499,3 +497,21 @@ O código abaixo foi usado para imprimir o resultado da análise léxica dos alg
 ## 6. Repositório no GitHub
 
 A implementação do analisador léxico está disponível em: https://github.com/jgkzanella/analisador-lexico-cpm.
+
+## Ambiente
+
+- Toda a implementação foi desenvolvida e testada em sistema Linux utilizando JDK.
+
+      sudo apt install default-jdk
+
+- Para gerar o analisador léxico e o parser:
+
+      java -jar ./antlr-4.11.1-complete.jar ./src/cpm.g4
+
+- Os códigos fontes da linguagem CPM devem estar no diretório ```./codigos/``` para teste.
+
+- Testando o lexer:
+
+  - Compilar e executar `./src/testarLexer.java` utilizando a dependência `antlr-4.11.1-complete.jar`.
+
+  - Digitar o nome de um arquivo de código fonte da pasta `./codigos/`. Exemplo: `hello_world.cpm`
