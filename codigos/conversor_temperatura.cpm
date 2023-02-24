@@ -1,4 +1,4 @@
-use "stdio"
+use "stdio";
 
 def Celsius_para_Fahrenheit(float c) :: float {
     float f = (9.0 * c / 5.0) + 32.0;

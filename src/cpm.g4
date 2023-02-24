@@ -19,7 +19,7 @@ USE: 'use' ;
 COMMENT: '/*' .* '*/' ;
 
 // Tipos primitivos
-TIPO: 'int' | 'float' | 'void' | 'double' | 'str' ;
+TIPO: 'int' | 'float' | 'void' | 'double' | 'str' | 'bool';
 
 // Booleanos
 BOOL: 'true' | 'false' ;
@@ -57,9 +57,6 @@ FCOL : ']' ;
 // Operadores lógicos
 OP_LOG: 'and' | 'or' | 'not' ;
 
-// Nome de variáveis e funções
-VARIAVEL: (LETRA | '_')(DIGITO | LETRA | '_')* ;
-
 // Atribuição
 ATR: '=' ;
 
@@ -79,6 +76,9 @@ NUM_FLOAT: ('-' | '+')?DIGITO+('.'DIGITO+) ;
 // Strings
 STR: '"' ('\\' ["\\] | ~["\\\r\n])* '"' ;
 
+// Nome de variáveis e funções
+VARIAVEL: (LETRA | '_')(DIGITO | LETRA | '_')* ;
+
 // Caracteres inúteis
 WS: [ \r\t\n]* -> skip ;
 
@@ -94,88 +94,133 @@ ERROR: . ;
 ----------------------------------------------------------------------------------------------------------
 */
 
+/*
+ -------------------------------------------- Estrutura --------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+*/
+
+// Estrutura padrão de um programa cpm
 programa:
-    declaracoes_externas funcao_principal?
+    global funcao_principal?
     ;
 
-declaracoes_externas:
+funcao_principal:
+    DEF MAIN '()' '::' TIPO bloco
+    ;
+
+global:
     (
-    importar
-    | declaracao_variavel
-    | declaracao_funcao
-    | declaracao_vetor
-    | bloco
-    | funcao
-    | expressao_aritmetica
-    | repeticao_while
-    | condicional_if
-    | condcional_ifse
-    | condicional_else
-    | repeticao_for
-    | atribuicao
+    bloco
+    | expressao ';'
+    | declaracao
+    | repeticao
+    | condicional
+    | chamada ';'
+    | importar ';'
+    | retornar ';'
     )*
     ;
 
-importar:
-    USE STR ';'
-    ;
-
-retornar:
-    RETURN (primitivos | VARIAVEL) ';'
-    ;
-
-primitivos:
-    (NUM_FLOAT | NUM_INT | STR)
-    ;
-
-expressao_aritmetica:
-    '(' (primitivos | VARIAVEL | expressao_aritmetica) OP_ARIT (expressao_aritmetica | primitivos | VARIAVEL) ')' |
-        (primitivos | VARIAVEL | expressao_aritmetica) OP_ARIT (expressao_aritmetica | primitivos | VARIAVEL)     |
-        VARIAVEL (MAISMAIS | MAISMENOS | MENOSMENOS) ';'
-    ;
-
-condicao:
-     '(' (tipos_loop (OP_REL | OP_LOG) tipos_loop (OP_LOG tipos_loop (OP_REL | OP_LOG) tipos_loop)*) ')' |
-         (tipos_loop (OP_REL | OP_LOG) tipos_loop (OP_LOG tipos_loop (OP_REL | OP_LOG) tipos_loop)*)
-    ;
-
-expressao_relacional:
-    '(' (BOOL | VARIAVEL | primitivos) OP_REL (expressao_relacional | BOOL | VARIAVEL) ')' |
-        (BOOL | VARIAVEL | primitivos) OP_REL (expressao_relacional | BOOL | VARIAVEL)     |
-    ;
-
-expressao_logica:
-    '(' (BOOL | VARIAVEL) OP_LOG (expressao_logica | BOOL | VARIAVEL) ')' |
-        (BOOL | VARIAVEL) OP_LOG (expressao_logica | BOOL | VARIAVEL)     |
-    ;
-
-declaracao_variavel:
-    TIPO VARIAVEL ('=' (primitivos | expressao_aritmetica | funcao))? ';'
-    ;
-
+// Um bloco é tudo aquilo em que é necessário {}
 bloco:
    '{'
    (
-   declaracao_variavel
-   | importar
-   | expressao_aritmetica
-   | funcao
-   | declaracao_funcao
-   | repeticao_while
-   | condicional_if
-   | condcional_ifse
-   | condicional_else
-   | retornar
-   | declaracao_vetor
-   | repeticao_for
-   | vetor
-   | atribuicao
+    bloco
+    | expressao ';'
+    | declaracao
+    | repeticao
+    | condicional
+    | chamada ';'
+    | importar ';'
+    | retornar ';'
    )*
    '}'
    ;
 
-atribuicao:
-    VARIAVEL '=' (primitivos | expressao_aritmetica | funcao)
+
+/*
+ -------------------------------------------- Auxiliares -------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+*/
+
+// Necessário para não causar recursão à esquerda nas expressões
+// Mudar nome
+tipos_primitivos:
+    NUM_FLOAT | NUM_INT | STR | VARIAVEL | vetor | BOOL
+    ;
+
+tipos_atribuicao:
+    tipos_primitivos
+    | expressao_aritmetica
+    | expressao_logica
+    | expressao_relacional
+    | funcao
+    ;
+
+termo_aritmetico:
+    fator_aritmetico (OP_ARIT fator_aritmetico)*
+    ;
+
+fator_aritmetico:
+    tipos_primitivos | '(' expressao_aritmetica ')'
+    ;
+
+termo_logico:
+    fator_logico (OP_LOG fator_logico)*
+    ;
+
+fator_logico:
+    VARIAVEL | vetor | BOOL | '(' expressao_logica ')'
+    ;
+
+termo_relacional:
+    fator_relacional (OP_REL fator_relacional)*
+    ;
+
+fator_relacional:
+    tipos_primitivos  | BOOL | '(' expressao_relacional ')'
+    ;
+
+/*
+ -------------------------------------------- Expressões -------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+*/
+
+expressao:
+    expressao_aritmetica
+    | expressao_logica
+    | expressao_relacional
+    ;
+
+expressao_aritmetica:
+    termo_aritmetico ((OP_ARIT (termo_aritmetico | termo_relacional)) | MENOSMENOS | MAISMAIS | MAISMENOS)*
+    ;
+
+expressao_logica:
+    termo_logico (OP_LOG (termo_logico | termo_relacional))*
+    ;
+
+expressao_relacional:
+    termo_relacional (OP_REL (termo_relacional | termo_logico))*
+    ;
+
+/*
+ -------------------------------------------- Declarações ------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+*/
+
+declaracao:
+    declaracao_variavel ';'
+    | declaracao_vetor
+    | declaracao_funcao
+    ;
+
+declaracao_variavel:
+    TIPO VARIAVEL ('=' tipos_atribuicao)?
+    ;
+
+declaracao_vetor:
+    TIPO '[' (NUM_INT | VARIAVEL | vetor) ']'
     ;
 
 declaracao_funcao:
@@ -183,42 +228,78 @@ declaracao_funcao:
     DEF VARIAVEL '()' '::' TIPO  bloco  // Gambiarra
     ;
 
-funcao:
-    VARIAVEL '(' (primitivos | /*vazio*/ | vetor | VARIAVEL | expressao_aritmetica | expressao_logica | expressao_relacional) ')' ';'
-    ;
+/*
+ -------------------------------------------- Repetições -------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+*/
 
-declaracao_vetor:
-    TIPO '[' (NUM_INT | VARIAVEL) ']' VARIAVEL ';'
-    ;
-
-vetor:
-    VARIAVEL '[' (NUM_INT | VARIAVEL) ']'
-    ;
-
-tipos_loop:  // Mudar nome
-    VARIAVEL | primitivos | expressao_aritmetica | BOOL | expressao_logica | expressao_relacional
+repeticao:
+    repeticao_while
+    | repeticao_for
     ;
 
 repeticao_while:
-    WHILE condicao bloco
+    WHILE expressao bloco
     ;
 
 repeticao_for:
-    FOR '(' declaracao_variavel  condicao ';' (VARIAVEL (MAISMAIS | MAISMENOS | MENOSMENOS)) ')' bloco
+    FOR '(' declaracao_variavel ';' expressao ';' (VARIAVEL (MAISMAIS | MAISMENOS | MENOSMENOS)) ')' bloco
+    ;
+
+/*
+ -------------------------------------------- Condicionais -----------------------------------------------
+----------------------------------------------------------------------------------------------------------
+*/
+
+condicional:
+    condicional_if
+    | condcional_ifse
+    | condicional_else
     ;
 
 condicional_if:
-    IF condicao bloco
+    IF expressao bloco
     ;
 
 condcional_ifse:
-    IFSE condicao bloco
+    IFSE expressao bloco
     ;
 
 condicional_else:
     ELSE bloco
     ;
 
-funcao_principal:
-    DEF MAIN '()' '::' TIPO bloco
+/*
+ -------------------------------------------- Chamadas ---------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+*/
+
+chamada:
+    funcao
+    | atribuicao
+    ;
+
+funcao:
+    VARIAVEL '(' (tipos_atribuicao | /*vazio*/) ')'
+    ;
+
+atribuicao:
+    (VARIAVEL | vetor) '=' tipos_atribuicao
+    ;
+
+/*
+ -------------------------------------------- Outros -----------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+*/
+
+importar:
+    USE STR
+    ;
+
+vetor:
+    VARIAVEL '[' (NUM_INT | VARIAVEL | vetor) ']'
+    ;
+
+retornar:
+    RETURN tipos_atribuicao
     ;
