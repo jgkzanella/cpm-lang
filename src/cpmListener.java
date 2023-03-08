@@ -47,15 +47,15 @@ public interface cpmListener extends ParseTreeListener {
 	 */
 	void exitBloco(cpmParser.BlocoContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link cpmParser#tipos_primitivos}.
+	 * Enter a parse tree produced by {@link cpmParser#argumento}.
 	 * @param ctx the parse tree
 	 */
-	void enterTipos_primitivos(cpmParser.Tipos_primitivosContext ctx);
+	void enterArgumento(cpmParser.ArgumentoContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link cpmParser#tipos_primitivos}.
+	 * Exit a parse tree produced by {@link cpmParser#argumento}.
 	 * @param ctx the parse tree
 	 */
-	void exitTipos_primitivos(cpmParser.Tipos_primitivosContext ctx);
+	void exitArgumento(cpmParser.ArgumentoContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link cpmParser#tipos_atribuicao}.
 	 * @param ctx the parse tree
@@ -156,6 +156,16 @@ public interface cpmListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpressao(cpmParser.ExpressaoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link cpmParser#expressao_reduzida}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressao_reduzida(cpmParser.Expressao_reduzidaContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link cpmParser#expressao_reduzida}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressao_reduzida(cpmParser.Expressao_reduzidaContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link cpmParser#expressao_aritmetica}.
 	 * @param ctx the parse tree
@@ -307,6 +317,16 @@ public interface cpmListener extends ParseTreeListener {
 	 */
 	void exitChamada(cpmParser.ChamadaContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link cpmParser#chamada_reduzida}.
+	 * @param ctx the parse tree
+	 */
+	void enterChamada_reduzida(cpmParser.Chamada_reduzidaContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link cpmParser#chamada_reduzida}.
+	 * @param ctx the parse tree
+	 */
+	void exitChamada_reduzida(cpmParser.Chamada_reduzidaContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link cpmParser#chamada_funcao}.
 	 * @param ctx the parse tree
 	 */
@@ -327,15 +347,25 @@ public interface cpmListener extends ParseTreeListener {
 	 */
 	void exitChamada_atribuicao(cpmParser.Chamada_atribuicaoContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link cpmParser#importar}.
+	 * Enter a parse tree produced by {@link cpmParser#chamada_importar}.
 	 * @param ctx the parse tree
 	 */
-	void enterImportar(cpmParser.ImportarContext ctx);
+	void enterChamada_importar(cpmParser.Chamada_importarContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link cpmParser#importar}.
+	 * Exit a parse tree produced by {@link cpmParser#chamada_importar}.
 	 * @param ctx the parse tree
 	 */
-	void exitImportar(cpmParser.ImportarContext ctx);
+	void exitChamada_importar(cpmParser.Chamada_importarContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link cpmParser#chamada_retornar}.
+	 * @param ctx the parse tree
+	 */
+	void enterChamada_retornar(cpmParser.Chamada_retornarContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link cpmParser#chamada_retornar}.
+	 * @param ctx the parse tree
+	 */
+	void exitChamada_retornar(cpmParser.Chamada_retornarContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link cpmParser#vetor}.
 	 * @param ctx the parse tree
@@ -356,14 +386,4 @@ public interface cpmListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFuncao(cpmParser.FuncaoContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link cpmParser#retornar}.
-	 * @param ctx the parse tree
-	 */
-	void enterRetornar(cpmParser.RetornarContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link cpmParser#retornar}.
-	 * @param ctx the parse tree
-	 */
-	void exitRetornar(cpmParser.RetornarContext ctx);
 }

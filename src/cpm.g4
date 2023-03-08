@@ -111,13 +111,11 @@ funcao_principal:
 global:
     (
     bloco
-    | expressao ';'
+    | expressao
     | declaracao
     | repeticao
     | condicional
-    | chamada ';'
-    | importar ';'
-    | retornar ';'
+    | chamada
     )*
     ;
 
@@ -128,13 +126,11 @@ bloco:
     bloco
     | vetor
     | funcao
-    | expressao ';'
+    | expressao
     | declaracao
     | repeticao
     | condicional
-    | chamada ';'
-    | importar ';'
-    | retornar ';'
+    | chamada
    )*
    '}'
    ;
@@ -147,17 +143,24 @@ bloco:
 
 // Necessário para não causar recursão à esquerda nas expressões
 // Mudar nome
-tipos_primitivos:
-    NUM_FLOAT | NUM_INT | STR | ID | BOOL | funcao | vetor
+
+argumento:
+    NUM_FLOAT
+    | NUM_INT
+    | STR
+    | ID
+    | BOOL
+    | vetor
+    | funcao
     ;
 
 tipos_atribuicao:
-    tipos_primitivos
+    argumento
     | expressao
     ;
 
 parametro:
-    ((tipos_primitivos | expressao) (',' (tipos_primitivos | expressao))*)
+    ((argumento | expressao) (',' (argumento | expressao))*)
     ;
 
 indice:
@@ -169,7 +172,7 @@ termo_aritmetico:
     ;
 
 fator_aritmetico:
-    tipos_primitivos | '(' expressao_aritmetica ')'
+    argumento | '(' expressao_aritmetica ')'
     ;
 
 termo_logico:
@@ -185,7 +188,7 @@ termo_relacional:
     ;
 
 fator_relacional:
-    tipos_primitivos  | BOOL | '(' expressao_relacional ')'
+    argumento  | BOOL | '(' expressao_relacional ')'
     ;
 
 /*
@@ -197,10 +200,15 @@ expressao:
     expressao_aritmetica
     | expressao_logica
     | expressao_relacional
+    | expressao_reduzida
+    ;
+
+expressao_reduzida:
+    ID (MENOSMENOS | MAISMAIS | MAISMENOS)
     ;
 
 expressao_aritmetica:
-    termo_aritmetico ((OP_ARIT (termo_aritmetico | termo_relacional)) | MENOSMENOS | MAISMAIS | MAISMENOS)*
+    termo_aritmetico ((OP_ARIT (termo_aritmetico | termo_relacional)))*
     ;
 
 expressao_logica:
@@ -217,17 +225,17 @@ expressao_relacional:
 */
 
 declaracao:
-    declaracao_variavel ';'
+    declaracao_variavel
     | declaracao_vetor
     | declaracao_funcao
     ;
 
 declaracao_variavel:
-    TIPO ID ('=' tipos_atribuicao)?
+    TIPO ID ('=' (argumento | expressao))? ';'
     ;
 
 declaracao_vetor:
-    TIPO '[' (NUM_INT | ID | vetor) ']'
+    TIPO '[' (NUM_INT | ID | vetor) ']' ID ('=' '{' parametro? '}')? ';'
     ;
 
 declaracao_funcao:
@@ -250,7 +258,7 @@ repeticao_while:
     ;
 
 repeticao_for:
-    FOR '(' declaracao_variavel ';' expressao ';' (ID (MAISMAIS | MAISMENOS | MENOSMENOS)) ')' bloco
+    FOR '(' declaracao_variavel expressao ';' expressao_reduzida ')' bloco
     ;
 
 /*
@@ -284,14 +292,29 @@ condicional_else:
 chamada:
     chamada_funcao
     | chamada_atribuicao
+    | chamada_importar
+    | chamada_retornar
+    | chamada_reduzida
+    ;
+
+chamada_reduzida:
+    expressao_reduzida ';'
     ;
 
 chamada_funcao:
-    ID '(' (tipos_atribuicao | /*vazio*/) ')'
+    ID '(' parametro? ')'  ';'
     ;
 
 chamada_atribuicao:
-    (ID | vetor) '=' tipos_atribuicao
+    (ID | vetor) '=' tipos_atribuicao ';'
+    ;
+
+chamada_importar:
+    USE STR ';'
+    ;
+
+chamada_retornar:
+    RETURN tipos_atribuicao ';'
     ;
 
 /*
@@ -299,18 +322,10 @@ chamada_atribuicao:
 ----------------------------------------------------------------------------------------------------------
 */
 
-importar:
-    USE STR
-    ;
-
 vetor:
     ID '[' indice ']'
     ;
 
 funcao:
-    ID '(' parametro ')'
-    ;
-
-retornar:
-    RETURN tipos_atribuicao
+    ID '(' parametro? ')'
     ;

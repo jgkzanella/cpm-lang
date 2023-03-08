@@ -64,13 +64,13 @@ public class cpmBaseListener implements cpmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTipos_primitivos(cpmParser.Tipos_primitivosContext ctx) { }
+	@Override public void enterArgumento(cpmParser.ArgumentoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTipos_primitivos(cpmParser.Tipos_primitivosContext ctx) { }
+	@Override public void exitArgumento(cpmParser.ArgumentoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -191,6 +191,18 @@ public class cpmBaseListener implements cpmListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExpressao(cpmParser.ExpressaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpressao_reduzida(cpmParser.Expressao_reduzidaContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpressao_reduzida(cpmParser.Expressao_reduzidaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -376,6 +388,18 @@ public class cpmBaseListener implements cpmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterChamada_reduzida(cpmParser.Chamada_reduzidaContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitChamada_reduzida(cpmParser.Chamada_reduzidaContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterChamada_funcao(cpmParser.Chamada_funcaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -400,13 +424,25 @@ public class cpmBaseListener implements cpmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterImportar(cpmParser.ImportarContext ctx) { }
+	@Override public void enterChamada_importar(cpmParser.Chamada_importarContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitImportar(cpmParser.ImportarContext ctx) { }
+	@Override public void exitChamada_importar(cpmParser.Chamada_importarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterChamada_retornar(cpmParser.Chamada_retornarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitChamada_retornar(cpmParser.Chamada_retornarContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -431,18 +467,6 @@ public class cpmBaseListener implements cpmListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFuncao(cpmParser.FuncaoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterRetornar(cpmParser.RetornarContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRetornar(cpmParser.RetornarContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
