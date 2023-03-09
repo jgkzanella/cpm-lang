@@ -11,33 +11,25 @@ import java.io.IOException;
 
 public class AnalisadorSemantico {
     public static void main(String[] args) {
-        //parsing the input
         cpmParser parser = getParser("/home/joaogkz/IdeaProjects/cpm-lang/src/codigos/teste.cpm");
 
-        //obter arvore
-        ParseTree ast = parser.programa();
+        ParseTree arvore_sintatica = parser.programa();
 
-        //System.out.println(ast.toStringTree());
-
-        //Inicia o MyListener, nossa implementação do baseListener
+        // inicia o MyListener, implementação do baseListener
         MyListener listener = new MyListener();
 
         ParseTreeWalker walker = new ParseTreeWalker();
 
-        //percorre a ast com a nossa implementação do listener
-        walker.walk(listener,ast);
-
-        //imprime a tabela de símbolos
-        System.out.println(listener.getTabelaSimbolos().toString());
+        // percorre arvore_sintatica
+        walker.walk(listener, arvore_sintatica);
     }
     private static cpmParser getParser(String fileName) {
         cpmParser parser = null;
-        try{
+        try {
             CharStream input = CharStreams.fromFileName(fileName);
             cpmLexer lexer = new cpmLexer(input);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             parser = new cpmParser(tokens);
-
         }
         catch(IOException e){
             e.printStackTrace();
