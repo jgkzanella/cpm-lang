@@ -12,7 +12,46 @@
 
 # Conteúdo
 
-
+- [1. Visão Geral](#1-visão-geral)
+  - [1.1. hello\_world.cpm](#11-hello_worldcpm)
+  - [1.2. plus\_minus.cpm](#12-plus_minuscpm)
+  - [1.3. fatorial.cpm](#13-fatorialcpm)
+- [2. Definição Léxica](#2-definição-léxica)
+- [3. Definição Sintática](#3-definição-sintática)
+  - [3.1. Estrutura](#31-estrutura)
+  - [3.2. Auxiliares](#32-auxiliares)
+  - [3.3. Expressões](#33-expressões)
+  - [3.4. Declarações](#34-declarações)
+  - [3.5. Repetições](#35-repetições)
+  - [3.6. Condicionais](#36-condicionais)
+  - [3.7. Chamadas](#37-chamadas)
+  - [3.8. Outros](#38-outros)
+- [4. Definição Semântica](#4-definição-semântica)
+- [5 Casos de Teste](#5-casos-de-teste)
+  - [5.1 Erros léxicos](#51-erros-léxicos)
+    - [hello\_world.cpm](#hello_worldcpm)
+    - [fatorial.cpm](#fatorialcpm)
+  - [5.1 Erros sintáticos](#51-erros-sintáticos)
+    - [hello\_world.cpm](#hello_worldcpm-1)
+    - [fatorial.cpm](#fatorialcpm-1)
+- [6. Detalhes da Implementação](#6-detalhes-da-implementação)
+  - [6.1. Algoritmos de exemplo](#61-algoritmos-de-exemplo)
+    - [6.1.1 hello\_world.cpm](#611-hello_worldcpm)
+    - [6.1.2. plus\_minus.cpm](#612-plus_minuscpm)
+    - [6.1.3. fatorial.cpm](#613-fatorialcpm)
+    - [6.1.4. conversor\_temeperatura.cpm](#614-conversor_temeperaturacpm)
+    - [6.1.5. media\_aritmetica.cpm](#615-media_aritmeticacpm)
+    - [6.1.6. soma\_naturais.cpm](#616-soma_naturaiscpm)
+    - [6.1.7. distancia\_pontos.cpm](#617-distancia_pontoscpm)
+    - [6.1.8. maximo.cpm](#618-maximocpm)
+    - [6.1.9. ordena\_numeros.cpm](#619-ordena_numeroscpm)
+    - [6.1.10. area\_circulo.cpm](#6110-area_circulocpm)
+  - [6.2. Definições Léxicas e Sintáticas](#62-definições-léxicas-e-sintáticas)
+  - [6.3 Analisador Léxico](#63-analisador-léxico)
+  - [6.4. Analisador Sintático](#64-analisador-sintático)
+  - [6.5. Analisador Semântico](#65-analisador-semântico)
+  - [6.6 Arquivos gerados pelo ANTLR e criados](#66-arquivos-gerados-pelo-antlr-e-criados)
+- [7. Repositório no GitHub](#7-repositório-no-github)
 
 # 1. Visão Geral
 
@@ -1155,7 +1194,7 @@ demonstram alguma característica diferente dos outros.
 
 ## 6.2. Definições Léxicas e Sintáticas
 
-Em seguida, foram criadas as definições léxicas e sintáticas da linguagem C+-, especificando quais palavras pertenciam a linguagem e em quais classes, e as regras de sua GLC. Abaixo está o código fonte do arquivo `cpm.g4`do **ANTLR** para as definições léxicas, sintáticas. Com base nele, executamos o arquivo binário do **ANTLR** para gerar os códigos fontes.
+Foram criadas as definições léxicas e sintáticas da linguagem C+-, especificando quais palavras pertenciam a linguagem e em quais classes, e as regras de sua GLC. Abaixo está o código fonte do arquivo `cpm.g4`do **ANTLR** para as definições léxicas, sintáticas. Com base nele, executamos o arquivo binário do **ANTLR** para gerar os códigos fontes.
 
 `cpm.g4`
 
@@ -1497,7 +1536,7 @@ Em seguida, foram criadas as definições léxicas e sintáticas da linguagem C+
 
 ## 6.3 Analisador Léxico
 
-Foi criado um código fonte para ler um arquivo fonte da linguagem C+- e imprimir o resultado de sua análise léxica. A execução imprime os lexemas, juntamente com suas classes e linhas que estão presentes. Também, em caso de lexema inválido, é chamada a função para imprimir uma mensagem de erro informando qual o lexema não identificado, a linha e os índices de início e fim do mesmo.
+Foi criado um código para ler um arquivo fonte da linguagem C+- e imprimir o resultado de sua análise léxica. A execução imprime os lexemas, juntamente com suas classes e linhas que estão presentes. Também, em caso de lexema inválido, é chamada a função para imprimir uma mensagem de erro informando qual o lexema não identificado, a linha e os índices de início e fim do mesmo.
 
     import antlr.cpmLexer;
 
@@ -1553,6 +1592,155 @@ Foi criado um código fonte para ler um arquivo fonte da linguagem C+- e imprimi
         }
     }
 
-# 6. Repositório no GitHub
+## 6.4. Analisador Sintático
 
-Toda a implementação da linguagem C+- está disponível em: https://github.com/jgkzanella/analisador-lexico-cpm.
+Foi criado um código para ler um arquivo fonte da linguagem C+- e mostrar sua árvore sintática.
+
+    import java.util.Arrays;
+    import java.util.Scanner;
+
+    import javax.swing.JFrame;
+    import javax.swing.JPanel;
+
+    import java.awt.BorderLayout;
+
+    import org.antlr.v4.gui.TreeViewer;
+    import org.antlr.v4.runtime.*;
+    import org.antlr.v4.runtime.tree.*;
+
+    import antlr.cpmLexer;
+    import antlr.cpmParser;
+
+    public class AnalisadorSintatico {
+
+        private static Scanner scanner = new Scanner(System.in);
+
+        public static void main(String[] args) throws Exception {
+
+            System.out.print("Entre o código fonte: ");
+            String filename = "./src/codigos/" + scanner.nextLine();
+            // cria um CharStream contendo a entrada a ser analisada.
+            CharStream entrada = CharStreams.fromFileName(filename);
+
+            // cria um analisador léxico para criar tokens da entrada.
+            cpmLexer lexer = new cpmLexer(entrada);
+
+            // cria um buffer de tokens para fornecer ao analisador sintático.
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+            // cria um analisador sintático para analisar a entrada e criar a árvore sintática.
+            cpmParser parser = new cpmParser(tokens);
+            ParseTree tree = parser.programa();
+
+            // Mostrar a árvore sintática no GUI do ANTLR.
+            // cria um painel para a árvore.
+            JPanel panel = new JPanel();
+            panel.setLayout(new BorderLayout());
+            TreeViewer viewer = new TreeViewer(Arrays.asList(parser.getRuleNames()), tree);
+            viewer.setScale(1.0);//aumenta o tamanho da fonte
+            panel.add(viewer);
+
+            // cria uma janela para o painel.
+            JFrame frame = new JFrame("Árvore Sintática do C+-");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.add(panel);
+            frame.pack();
+            frame.setVisible(true);
+        }
+    }
+
+## 6.5. Analisador Semântico
+
+## 6.6 Arquivos gerados pelo ANTLR e criados
+
+Os arquivos gerados pelo ANTLR com base em nossas definições junto aos nossos arquivos criados, estão dispostos da seguinte maneira:
+
+    .
+    ├── AnalisadorLexico.java
+    ├── AnalisadorSemantico.java
+    ├── AnalisadorSintatico.java
+    ├── MyListener.java
+    ├── antlr
+    │   ├── cpm.g4
+    │   ├── cpm.interp
+    │   ├── cpm.tokens
+    │   ├── cpmBaseListener.class
+    │   ├── cpmBaseListener.java
+    │   ├── cpmBaseVisitor.class
+    │   ├── cpmBaseVisitor.java
+    │   ├── cpmLexer.class
+    │   ├── cpmLexer.interp
+    │   ├── cpmLexer.java
+    │   ├── cpmLexer.tokens
+    │   ├── cpmListener.class
+    │   ├── cpmListener.java
+    │   ├── cpmParser$ArgumentoContext.class
+    │   ├── cpmParser$BlocoContext.class
+    │   ├── cpmParser$ChamadaContext.class
+    │   ├── cpmParser$Chamada_atribuicaoContext.class
+    │   ├── cpmParser$Chamada_funcaoContext.class
+    │   ├── cpmParser$Chamada_importarContext.class
+    │   ├── cpmParser$Chamada_reduzidaContext.class
+    │   ├── cpmParser$Chamada_retornarContext.class
+    │   ├── cpmParser$Condcional_ifseContext.class
+    │   ├── cpmParser$CondicionalContext.class
+    │   ├── cpmParser$Condicional_elseContext.class
+    │   ├── cpmParser$Condicional_ifContext.class
+    │   ├── cpmParser$DeclaracaoContext.class
+    │   ├── cpmParser$Declaracao_funcaoContext.class
+    │   ├── cpmParser$Declaracao_variavelContext.class
+    │   ├── cpmParser$Declaracao_vetorContext.class
+    │   ├── cpmParser$ExpressaoContext.class
+    │   ├── cpmParser$Expressao_aritmeticaContext.class
+    │   ├── cpmParser$Expressao_logicaContext.class
+    │   ├── cpmParser$Expressao_reduzidaContext.class
+    │   ├── cpmParser$Expressao_relacionalContext.class
+    │   ├── cpmParser$Fator_aritmeticoContext.class
+    │   ├── cpmParser$Fator_logicoContext.class
+    │   ├── cpmParser$Fator_relacionalContext.class
+    │   ├── cpmParser$FuncaoContext.class
+    │   ├── cpmParser$Funcao_principalContext.class
+    │   ├── cpmParser$GlobalContext.class
+    │   ├── cpmParser$IndiceContext.class
+    │   ├── cpmParser$ParametroContext.class
+    │   ├── cpmParser$ProgramaContext.class
+    │   ├── cpmParser$RepeticaoContext.class
+    │   ├── cpmParser$Repeticao_forContext.class
+    │   ├── cpmParser$Repeticao_whileContext.class
+    │   ├── cpmParser$Termo_aritmeticoContext.class
+    │   ├── cpmParser$Termo_logicoContext.class
+    │   ├── cpmParser$Termo_relacionalContext.class
+    │   ├── cpmParser$Tipos_argumentosContext.class
+    │   ├── cpmParser$Tipos_atribuicaoContext.class
+    │   ├── cpmParser$Tipos_primitivosContext.class
+    │   ├── cpmParser$VetorContext.class
+    │   ├── cpmParser.class
+    │   ├── cpmParser.java
+    │   ├── cpmVisitor.class
+    │   └── cpmVisitor.java
+    └── codigos
+        ├── ERRO-atribuicao.cpm
+        ├── ERRO-dupla_inicializao.cpm
+        ├── ERRO-hello_word.cpm
+        ├── ERRO-numero_argumentos.cpm
+        ├── ERRO-variavel_nao_declarada.cpm
+        ├── ERRO_LEXICO-fatorial.cpm
+        ├── ERRO_LEXICO-hello_world.cpm
+        ├── ERRO_SINTATICO-fatorial.cpm
+        ├── ERRO_SINTATICO-hello_world.cpm
+        ├── area_circulo.cpm
+        ├── arranjo.cpm
+        ├── codigo.cpm
+        ├── conversor_temperatura.cpm
+        ├── distancia_pontos.cpm
+        ├── fatorial.cpm
+        ├── hello_world.cpm
+        ├── maximo.cpm
+        ├── media_aritmetica.cpm
+        ├── ordena_numeros.cpm
+        ├── plus_minus.cpm
+        └── soma_naturais.cpm
+
+# 7. Repositório no GitHub
+
+Toda a implementação da linguagem C+-, assim como esta documentação, estão disponíveis em: https://github.com/jgkzanella/cpm-lang.
