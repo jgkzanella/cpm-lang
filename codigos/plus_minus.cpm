@@ -6,4 +6,4 @@ def main() :: int {
     c+-;
     print(c);
     return 0;
-}
+};

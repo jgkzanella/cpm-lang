@@ -1,0 +1,17 @@
+use "stdio";
+
+def area_circulo(float raio) :: float {
+    float area = 3.14159 * raio * raio;
+    return area;
+};
+
+def main() :: int {
+    float raio = 0.0;
+    read(raio);
+
+    float area = 0.0;
+    area = area_circulo(raio);
+    print(area);
+
+    return 0;
+};
