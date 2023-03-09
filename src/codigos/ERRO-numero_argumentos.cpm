@@ -1,0 +1,19 @@
+use "stdio";
+
+def funcao(int x, float y, bool z) :: bool {
+    if (z) {
+        return x;
+    }
+    else {
+        return y;
+    }
+};
+
+def main() :: int {
+
+    int x = 10
+    float y = 25.8
+    int b = funcao(x, y)
+
+    return 0;
+};

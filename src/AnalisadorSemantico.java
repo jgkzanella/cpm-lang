@@ -8,11 +8,17 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public class AnalisadorSemantico {
+
+    private static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
+        System.out.print("Entre o código fonte: ");
+        String filename = "./src/codigos/" + scanner.nextLine();
         //parsing the input
-        cpmParser parser = getParser("/home/joaogkz/IdeaProjects/cpm-lang/src/codigos/teste.cpm");
+        cpmParser parser = getParser(filename);
 
         //obter arvore
         ParseTree ast = parser.programa();

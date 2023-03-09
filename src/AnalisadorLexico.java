@@ -7,7 +7,7 @@ import org.antlr.v4.runtime.Token;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class testarLexer {
+public class AnalisadorLexico {
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -29,7 +29,7 @@ public class testarLexer {
 
     public static void  main (String[] args){
         System.out.print("Entre o código fonte: ");
-        String filename = "./codigos/" + scanner.nextLine();
+        String filename = "./src/codigos/" + scanner.nextLine();
         try {
             CharStream input = CharStreams.fromFileName(filename);
             cpmLexer lexer = new cpmLexer(input);

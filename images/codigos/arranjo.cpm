@@ -1,0 +1,20 @@
+use "stdio";
+
+def main() :: int {
+
+    int n = 0;
+    read(n);
+
+    int[n] arranjo;
+
+    for (int i = 0; i < n; i++) {
+        read(arranjo[i]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        print(arranjo[i]);
+        print(" ");
+    }
+
+    return 0;
+};

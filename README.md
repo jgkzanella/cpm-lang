@@ -1,34 +1,33 @@
-# <center> Linguagem C Mais ou Menos - **C** **P**lus **M**inus (**CPM**) </center>
+# <p style="text-align:center"><img src="./images/UFLA.png" width="500"><br><br> Departamento de Ciência da Computação<br><br>GCC130 - Compiladores - 2022/2<br><br>Prof. Dr. Maurício Ronny De Almeida Souza<br><br>
 
-<center>
+<p style="text-align:center"><br>Henrique Curi de Miranda - 202020087
+<br>
+<br>João Gabriel Kondarzewski Zanella - 202020091
+<br>
+<br>Nathan Felipe de Assis - 202020774
+<br>
+<br>Victor Gonçalves Lima - 202020775
 
-Henrique Curi de Miranda - 202020087
+# <p style="text-align:center"><br>Linguagem C Mais ou Menos - **C** **P**lus **M**inus (**CPM**)
 
-João Gabriel Kondarzewski Zanella - 202020091
+# Conteúdo
 
-Nathan Felipe de Assis - 202020774
 
-Victor Gonçalves Lima - 202020775
 
-</center>
+# 1. Visão Geral
 
-## 1. Visão Geral
+A linguagem de programação projetada foi nomeada C+- ("C Mais ou Menos"). Seu nome pode ser lido de várias maneiras, como "C Mais ou Menos", "C Plus Minus" ou simplesmente "CPM", igual a extensão de código fonte da linguagem (".cpm"). O C+- é uma linguagem inspirada em C, C++ e Python, apresentando sintax simples, mas fortemente tipada. O objeto da linguagem é ser didática e minimalista, assim, não é orienda a objetos e possui tipos primitivos bem definidos. Abaixo temos alguns exemplos de códigos escritos com a linguagem.
 
-A linguagem projetada foi nomeada como C+-. Pode ser lida como “C mais ou menos”, “C plus
-minus” ou apenas “cpm”, que é a extensão de arquivos da linguagem.
-
-Alguns algoritmos elaborados em C+-:
-
-### 1.1. hello_world.cpm
+## 1.1. hello_world.cpm
 
     use "stdio";
 
     def main() :: int {
         print("Hello, World!");
         return 0;
-    }
+    };
 
-### 1.2. plus_minus.cpm
+## 1.2. plus_minus.cpm
 
     use "stdio";
 
@@ -38,9 +37,9 @@ Alguns algoritmos elaborados em C+-:
         c+-;
         print(c);
         return 0;
-    }
+    };
 
-### 1.3. fatorial.cpm
+## 1.3. fatorial.cpm
 
     use "stdio";
 
@@ -51,7 +50,7 @@ Alguns algoritmos elaborados em C+-:
             n--;
         }
         return f;
-    }
+    };
 
     def main() :: int {
         int n = 0;
@@ -59,14 +58,16 @@ Alguns algoritmos elaborados em C+-:
         n = fatorial(n);
         print(n);
         return 0;
-    }
+    };
 
-## 2. Definição Léxica
+# 2. Definição Léxica
+
+A tabela abaixo apresenta uma lista completa dos elementos que compõem a definição léxica da linguagem C+-, incluindo estruturas de controle, operadores aritméticos, relacionais e lógicos, tipos primitivos, delimitadores e identificadores de variáveis e funções. A tabela também inclui especificações para comentários, definição da função principal, definição de funções, retorno de valor por função, estruturas condicionais e de repetição, separadores de tipo da função e linha de expressão, atribuição de valor à variável, incrementadores e decrementadores, números inteiros e reais, e cadeias de caracteres. Esses padrões de uso fornecem as regras fundamentais para que um programa seja escrito em C+-.
 
 Classe | Sigla | Padrão
 -------|-------|-------
 Comentário | COMMENT | Cadeia de caracteres iniciadas com "/*" e terminadas com "*/"
-Tipos primitivos | TIPO | "int", "float", "void", "double", "str" |
+Tipos primitivos | TIPO | "int", "float", "void", "double", "str", "bool" |
 Identificação da função principal | MAIN | "main"
 Definir funções | DEF | "def"
 Retorno de valor por função | RETURN | "return"
@@ -95,282 +96,190 @@ Números inteiros | NUM_INT | Sequência de dígitos que, opcionalmente, iniciar
 Números reais | NUM_FLOAT | Sequência de dígitos que, opcionalmente, iniciar ou com um símbolo negativo ou um símbolo positivo seguidas de um ponto e outra sequência de dígitos
 Cadeias de caracteres (strings) | STR | Cadeia de caracteres delimitados por aspas duplas
 
-## 3. Definição Sintática
+# 3. Definição Sintática
 
-### 3.1. Estrutura
+A definição sintática de uma linguagem é definida por sua Grmática Livre de Contexto (GLC). Uma GLC é uma quádrupla (N, T, P, S), onde:
 
-- programa
+- N é um conjunto finito de símbolos não-terminais (variáveis);
 
-        global funcao_principal?
+- T é um conjunto finito de símbolos terminais (tokens);
 
-- funcao_principal:
+- P é um conjunto finito de regras de produção que definem como as variáveis podem ser substituídas por sequências de símbolos terminais e não-terminais;
 
-        DEF MAIN '()' '::' TIPO bloco
+- S é o símbolo inicial (uma variável distinta de N) que é usado como ponto de partida para gerar todas as sentenças da linguagem.
 
-- global
+Abaixo estão as regras da GLC da linguagem C+-,  divididas em grupos.
 
-        (
-        bloco
-        | expressao ';'
-        | declaracao
-        | repeticao
-        | condicional
-        | chamada ';'
-        | importar ';'
-        | retornar ';'
-        )*
+## 3.1. Estrutura
 
-- bloco
+    programa → global funcao_principal?
 
-       '{'
-        (
-        bloco
-        | vetor
-        | funcao
-        | expressao ';'
-        | declaracao
-        | repeticao
-        | condicional
-        | chamada ';'
-        | importar ';'
-        | retornar ';'
-        )*
-        '}'
+    funcao_principal -> DEF MAIN '()' '::' TIPO bloco ';'
 
-### 3.2. Auxiliares
+    global -> (bloco | expressao | declaracao | repeticao | condicional | chamada)*
 
-- tipos_primitivos
+    bloco -> '{' (bloco | vetor | funcao | expressao | declaracao | repeticao | condicional | chamada)* '}'
 
-        NUM_FLOAT | NUM_INT | STR | ID | BOOL | funcao | vetor
+## 3.2. Auxiliares
 
-- tipos_atribuicao
+    argumento -> NUM_FLOAT | NUM_INT | STR | BOOL | ID | vetor | funcao
 
-        | expressao
+    tipos_atribuicao -> argumento | expressao
 
-- parametro
+    parametro -> ((argumento | expressao) (',' (argumento | expressao)) *)
 
-        ((tipos_primitivos | expressao) (',' (tipos_primitivos | expressao))*)
+    indice -> NUM_INT | ID | vetor | funcao | expressao
 
-- indice
+    termo_aritmetico -> fator_aritmetico (OP_ARIT fator_aritmetico)*
 
-        (NUM_INT | ID | vetor | funcao | expressao)
+    fator_aritmetico -> argumento | '(' expressao_aritmetica ')'
 
-- termo_aritmetico
+    termo_logico -> fator_logico (OP_LOG fator_logico)*
 
-        fator_aritmetico (OP_ARIT fator_aritmetico)*
+    fator_logico -> ID | vetor | BOOL | '(' expressao_logica ')'
 
-- fator_aritmetico
+    termo_relacional -> fator_relacional (OP_REL fator_relacional)*
 
-        tipos_primitivos | '(' expressao_aritmetica ')'
+## 3.3. Expressões
 
-- termo_logico
+    expressao -> expressao_aritmetica | expressao_logica | expressao_relacional | expressao_reduzida
 
-        fator_logico (OP_LOG fator_logico)*
+    expressao_reduzida -> ID (MENOSMENOS | MAISMAIS | MAISMENOS)
 
-- fator_logico
+    expressao_aritmetica -> termo_aritmetico ((OP_ARIT (termo_aritmetico | termo_relacional)))*
 
-        ID | vetor | BOOL | '(' expressao_logica ')'
+    expressao_logica -> termo_logico (OP_LOG (termo_logico | termo_relacional))*
 
-- termo_relacional
+    expressao_relacional -> termo_relacional (OP_REL (termo_relacional | termo_logico))*
 
-        fator_relacional (OP_REL fator_relacional)*
+## 3.4. Declarações
 
-- fator_relacional
+    declaracao -> declaracao_variavel | declaracao_vetor | declaracao_funcao
 
-        tipos_primitivos  | BOOL | '(' expressao_relacional ')'
+    declaracao_variavel -> TIPO ID ('=' (argumento | expressao))? ';'
 
-### 3.3. Expressões
+    declaracao_vetor -> TIPO '[' (NUM_INT | ID | vetor) ']' ID ('=' '{' parametro? '}')? ';'
 
-- expressao
+    declaracao_funcao -> DEF ID '(' (TIPO ID (',' TIPO ID)*) ')' '::' TIPO  bloco? ';' | DEF ID '()' '::' TIPO  bloco? ';'
 
-        expressao_aritmetica
-        | expressao_logica
-        | expressao_relacional
+## 3.5. Repetições
 
-- expressao_aritmetica
+    repeticao -> repeticao_while | repeticao_for
 
-        termo_aritmetico ((OP_ARIT (termo_aritmetico | termo_relacional)) | MENOSMENOS | MAISMAIS | MAISMENOS)*
+    repeticao_while -> WHILE expressao bloco
 
-- expressao_logica
+    repeticao_for -> FOR '(' declaracao_variavel expressao ';' expressao_reduzida ')' bloco
 
-        termo_logico (OP_LOG (termo_logico | termo_relacional))*
+## 3.6. Condicionais
 
-- expressao_relacional
+    condicional -> condicional_if | condcional_ifse | condicional_else
 
-        termo_relacional (OP_REL (termo_relacional | termo_logico))*
+    condicional_if -> IF expressao bloco
 
-### 3.4. Declarações
+    condcional_ifse -> IFSE expressao bloco
 
-- declaracao
+    condicional_else -> ELSE bloco
 
-        declaracao_variavel ';'
-        | declaracao_vetor
-        | declaracao_funcao
+## 3.7. Chamadas
 
-- declaracao_variavel
+    chamada -> chamada_funcao | chamada_atribuicao | chamada_importar | chamada_retornar | chamada_reduzida
 
-        TIPO ID ('=' tipos_atribuicao)?
+    chamada_reduzida -> expressao_reduzida ';'
 
-- declaracao_vetor
+    chamada_funcao -> ID '(' parametro? ')'  ';'
 
-        TIPO '[' (NUM_INT | ID | vetor) ']'
+    chamada_atribuicao -> (ID | vetor) '=' tipos_atribuicao ';'
 
-- declaracao_funcao
+    chamada_importar -> USE STR ';'
 
-        DEF ID '(' (TIPO ID (',' TIPO ID)*) ')' '::' TIPO  bloco |
-        DEF ID '()' '::' TIPO  bloco  // Gambiarra
+    chamada_retornar -> RETURN tipos_atribuicao ';'
 
-### 3.5. Repetições
+## 3.8. Outros
 
-- repeticao
-
-        repeticao_while
-        | repeticao_for
-
-- repeticao_while
-
-        WHILE expressao bloco
-
-- repeticao_for
-
-        FOR '(' declaracao_variavel ';' expressao ';' (ID (MAISMAIS | MAISMENOS | MENOSMENOS)) ')' bloco
-
-### 3.6. Condicionais
-
-- condicional
-
-        condicional_if
-        | condcional_ifse
-        | condicional_else
-
-- condicional_if
-
-        IF expressao bloco
-
-- condcional_ifse
-
-        IFSE expressao bloco
-
-- condicional_else
-
-        ELSE bloco
-
-### 3.7. Chamadas
-
-- chamada
-
-        chamada_funcao
-        | chamada_atribuicao
-
-- chamada_funcao
-
-        ID '(' (tipos_atribuicao | /*vazio*/) ')'
-
-- chamada_atribuicao
-
-        (ID | vetor) '=' tipos_atribuicao
-
-### 3.8. Outros
-
-- importar
-
-        USE STR
-
-- vetor
-
-        ID '[' indice ']'
-
-- funcao
-
-        ID '(' parametro ')'
-
-- retornar
-
-        RETURN tipos_atribuicao
-
-## 4. Casos de Teste
-
-### 4.1 hello_world.cpm
-
-- Sem erro
-
-        use "stdio";
-
-        def main() :: int {
-            print("Hello, World!");
-            return 0;
-        }
-
-    O código sem nenhum erro gera a seguinte saída de tokens:
-
-        Lexema: use
-            Classe: 'use'
-            Linha: 1
-        Lexema: "stdio"
-            Classe: STR
-            Linha: 1
-        Lexema: ;
-            Classe: ';'
-            Linha: 1
-        Lexema: def
-            Classe: 'def'
-            Linha: 3
-        Lexema: main
-            Classe: 'main'
-            Linha: 3
-        Lexema: (
-            Classe: '('
-            Linha: 3
-        Lexema: )
-            Classe: ')'
-            Linha: 3
-        Lexema: ::
-            Classe: '::'
-            Linha: 3
-        Lexema: int
-            Classe: TIPO
-            Linha: 3
-        Lexema: {
-            Classe: '{'
-            Linha: 3
-        Lexema: print
-            Classe: ID
-            Linha: 5
-        Lexema: (
-            Classe: '('
-            Linha: 5
-        Lexema: "Hello, World!"
-            Classe: STR
-            Linha: 5
-        Lexema: )
-            Classe: ')'
-            Linha: 5
-        Lexema: ;
-            Classe: ';'
-            Linha: 5
-        Lexema: return
-            Classe: 'return'
-            Linha: 7
-        Lexema: 0
-            Classe: NUM_INT
-            Linha: 7
-        Lexema: ;
-            Classe: ';'
-            Linha: 7
-        Lexema: }
-            Classe: '}'
-            Linha: 8
-        Lexema: <EOF>
-            Classe: EOF
-            Linha: 9
-
-    Gera a seguinte árvore sintática:
-
-    <img src="./images/hello_word-tree.png" height="g00">
-
-- Com erro
-
-    Um erro sintático em `returm` ao invés de `return` e um erro léxico com a presença de um lexema não identificável “~”)
+    vetor -> ID '[' indice ']'
+
+    funcao -> ID '(' parametro? ')'
+
+# 4. Definição Semântica
+
+
+
+# 5 Casos de Teste
+
+## 5.1 Erros léxicos
+
+### hello_world.cpm
+
+- Sem erro:
+
+    use "stdio";
+
+    def main() :: int {
+        print("Hello, World!");
+        return 0;
+    };
+
+    O código sem nenhum erro gera a seguinte saída de tokens pelo nosso Analisador Léxico:
+
+    Lexema: use
+        Classe: 'use'
+        Linha:  1
+    Lexema: "stdio"
+        Classe: STR
+        Linha:  1
+    Lexema: ;
+        Classe: ';'
+        Linha:  1
+    Lexema: def
+        Classe: 'def'
+        Linha:  3
+    Lexema: main
+        Classe: 'main'
+        Linha:  3
+    Lexema: ()
+        Classe: '()'
+        Linha:  3
+    Lexema: ::
+        Classe: '::'
+        Linha:  3
+    Lexema: int
+        Classe: TIPO
+        Linha:  3
+    Lexema: {
+        Classe: '{'
+        Linha:  3
+    Lexema: print
+        Classe: ID
+        Linha:  4
+    Lexema: (
+        Classe: '('
+        Linha:  4
+    Lexema: "Hello, World!"
+        Classe: STR
+        Linha:  4
+    Lexema: )
+        Classe: ')'
+        Linha:  4
+    Lexema: ;
+        Classe: ';'
+        Linha:  4
+    Lexema: return
+        Classe: 'return'
+        Linha:  5
+    Lexema: 0
+        Classe: NUM_INT
+        Linha:  5
+    Lexema: ;
+        Classe: ';'
+        Linha:  5
+    Lexema: }
+        Classe: '}'
+        Linha:  6
+    Lexema: ;
+        Classe: ';'
+        Linha:  6
+
+- Com erro:
 
         use "stdio";
 
@@ -379,7 +288,7 @@ Cadeias de caracteres (strings) | STR | Cadeia de caracteres delimitados por asp
             returm 0;
         }
 
-    Gera a seguinte saída de tokens:
+    O código com um erro léxico pela presença de um lexema não identificável “~”, gera a seguinte saída de tokens pelo nosso Analisador Léxico:
 
         Lexema: use
             Classe: 'use'
@@ -409,7 +318,7 @@ Cadeias de caracteres (strings) | STR | Cadeia de caracteres delimitados por asp
             Classe: '{'
             Linha:  3
         Lexema: print
-            Classe: VARIAVEL
+            Classe: ID
             Linha:  4
         Lexema: (
             Classe: '('
@@ -433,7 +342,7 @@ Cadeias de caracteres (strings) | STR | Cadeia de caracteres delimitados por asp
             Classe: ';'
             Linha:  4
         Lexema: returm
-            Classe: VARIAVEL
+            Classe: ID
             Linha:  5
         Lexema: 0
             Classe: NUM_INT
@@ -445,89 +354,9 @@ Cadeias de caracteres (strings) | STR | Cadeia de caracteres delimitados por asp
             Classe: '}'
             Linha:  6
 
-    Gera a seguinte árvore sintática:
+### fatorial.cpm
 
-    <img src="./images/hello_word-erros.png" height="300">
-
-## 5. Detalhes da Implementação
-
-A equipe gerou os algoritmos de exemplo (arquivos do diretório “codigos”), “cpm.g4”,
-“testarLexer.java”, “README.md” e “.gitignore”. O restante dos arquivos foi gerado utilizando o
-ANTLR.
-
-### 5.1. Algoritmos de exemplo
-
-Foram gerados cinco códigos de exemplo para o analisador léxico. Todos são individuais e
-demonstram alguma característica diferente dos outros.
-
-- hello_wordl.cpm
-
-        use "stdio";
-
-        def main() :: int {
-
-            print("Hello, World!");
-
-            return 0;
-        }
-
-- plus_minus.cpm
-
-        use "stdio";
-
-        def main() :: int {
-            int c = 0;
-            read(c);
-            c+-;
-            print(c);
-            return 0;
-        }
-
-- arranjo.cpm
-
-        use "stdio"
-
-        def main() :: int {
-
-            int n = 0;
-            read(n);
-
-            int[n] arranjo;
-
-            for (int i = 0; i < n; i++) {
-                read(arranjo[i]);
-            }
-
-            for (int i = 0; i < n; i++) {
-                print(arranjo[i]);
-                print(" ");
-            }
-
-            return 0;
-        }
-
-- conversor_temperatura.cpm
-
-        use "stdio"
-
-        def Celsius_para_Fahrenheit(float c) :: float {
-            float f = (9.0 * c / 5.0) + 32.0;
-            return f;
-        }
-
-        def main() :: int {
-
-            float c = 0.0;
-            read(c);
-
-            float f = 0;
-            f = Celsius_para_Fahrenheit(c);
-            print(f);
-
-            return 0;
-        }
-
-- fatorial.cpm
+- Sem erro:
 
         use "stdio";
 
@@ -538,7 +367,7 @@ demonstram alguma característica diferente dos outros.
                 n--;
             }
             return f;
-        }
+        };
 
         def main() :: int {
             int n = 0;
@@ -546,13 +375,795 @@ demonstram alguma característica diferente dos outros.
             n = fatorial(n);
             print(n);
             return 0;
+        };
+
+    O código sem nenhum erro gera a seguinte saída de tokens pelo nosso Analisador Léxico:
+
+        Lexema: use
+            Classe: 'use'
+            Linha:  1
+        Lexema: "stdio"
+            Classe: STR
+            Linha:  1
+        Lexema: ;
+            Classe: ';'
+            Linha:  1
+        Lexema: def
+            Classe: 'def'
+            Linha:  3
+        Lexema: fatorial
+            Classe: ID
+            Linha:  3
+        Lexema: (
+            Classe: '('
+            Linha:  3
+        Lexema: int
+            Classe: TIPO
+            Linha:  3
+        Lexema: n
+            Classe: ID
+            Linha:  3
+        Lexema: )
+            Classe: ')'
+            Linha:  3
+        Lexema: ::
+            Classe: '::'
+            Linha:  3
+        Lexema: int
+            Classe: TIPO
+            Linha:  3
+        Lexema: {
+            Classe: '{'
+            Linha:  3
+        Lexema: int
+            Classe: TIPO
+            Linha:  4
+        Lexema: f
+            Classe: ID
+            Linha:  4
+        Lexema: =
+            Classe: '='
+            Linha:  4
+        Lexema: 1
+            Classe: NUM_INT
+            Linha:  4
+        Lexema: ;
+            Classe: ';'
+            Linha:  4
+        Lexema: while
+            Classe: 'while'
+            Linha:  5
+        Lexema: (
+            Classe: '('
+            Linha:  5
+        Lexema: n
+            Classe: ID
+            Linha:  5
+        Lexema: >
+            Classe: OP_REL
+            Linha:  5
+        Lexema: 1
+            Classe: NUM_INT
+            Linha:  5
+        Lexema: )
+            Classe: ')'
+            Linha:  5
+        Lexema: {
+            Classe: '{'
+            Linha:  5
+        Lexema: f
+            Classe: ID
+            Linha:  6
+        Lexema: =
+            Classe: '='
+            Linha:  6
+        Lexema: f
+            Classe: ID
+            Linha:  6
+        Lexema: *
+            Classe: OP_ARIT
+            Linha:  6
+        Lexema: n
+            Classe: ID
+            Linha:  6
+        Lexema: ;
+            Classe: ';'
+            Linha:  6
+        Lexema: n
+            Classe: ID
+            Linha:  7
+        Lexema: --
+            Classe: '--'
+            Linha:  7
+        Lexema: ;
+            Classe: ';'
+            Linha:  7
+        Lexema: }
+            Classe: '}'
+            Linha:  8
+        Lexema: return
+            Classe: 'return'
+            Linha:  9
+        Lexema: f
+            Classe: ID
+            Linha:  9
+        Lexema: ;
+            Classe: ';'
+            Linha:  9
+        Lexema: }
+            Classe: '}'
+            Linha:  10
+        Lexema: ;
+            Classe: ';'
+            Linha:  10
+        Lexema: def
+            Classe: 'def'
+            Linha:  12
+        Lexema: main
+            Classe: 'main'
+            Linha:  12
+        Lexema: ()
+            Classe: '()'
+            Linha:  12
+        Lexema: ::
+            Classe: '::'
+            Linha:  12
+        Lexema: int
+            Classe: TIPO
+            Linha:  12
+        Lexema: {
+            Classe: '{'
+            Linha:  12
+        Lexema: int
+            Classe: TIPO
+            Linha:  13
+        Lexema: n
+            Classe: ID
+            Linha:  13
+        Lexema: =
+            Classe: '='
+            Linha:  13
+        Lexema: 0
+            Classe: NUM_INT
+            Linha:  13
+        Lexema: ;
+            Classe: ';'
+            Linha:  13
+        Lexema: read
+            Classe: ID
+            Linha:  14
+        Lexema: (
+            Classe: '('
+            Linha:  14
+        Lexema: n
+            Classe: ID
+            Linha:  14
+        Lexema: )
+            Classe: ')'
+            Linha:  14
+        Lexema: ;
+            Classe: ';'
+            Linha:  14
+        Lexema: n
+            Classe: ID
+            Linha:  15
+        Lexema: =
+            Classe: '='
+            Linha:  15
+        Lexema: fatorial
+            Classe: ID
+            Linha:  15
+        Lexema: (
+            Classe: '('
+            Linha:  15
+        Lexema: n
+            Classe: ID
+            Linha:  15
+        Lexema: )
+            Classe: ')'
+            Linha:  15
+        Lexema: ;
+            Classe: ';'
+            Linha:  15
+        Lexema: print
+            Classe: ID
+            Linha:  16
+        Lexema: (
+            Classe: '('
+            Linha:  16
+        Lexema: n
+            Classe: ID
+            Linha:  16
+        Lexema: )
+            Classe: ')'
+            Linha:  16
+        Lexema: ;
+            Classe: ';'
+            Linha:  16
+        Lexema: return
+            Classe: 'return'
+            Linha:  17
+        Lexema: 0
+            Classe: NUM_INT
+            Linha:  17
+        Lexema: ;
+            Classe: ';'
+            Linha:  17
+        Lexema: }
+            Classe: '}'
+            Linha:  18
+        Lexema: ;
+            Classe: ';'
+            Linha:  18
+
+- Com erro:
+
+        use "stdio";
+
+        def fatorial(int n) :: int {
+            int f = 1;
+            while (n ? 1) {
+                f = f * n;
+                n--;
+            }
+            return f;
+        };
+
+        def main() :: int {
+            int n = 0;
+            read(&n);
+            n = fatorial(n);
+            print(n);
+            return 0;
+        };
+
+    O código com dois erros léxicos pela presença de dois lexemas não identificáveis: “?” e "&", gera a seguinte saída de tokens pelo nosso Analisador Léxico:
+
+        Lexema: use
+            Classe: 'use'
+            Linha:  1
+        Lexema: "stdio"
+            Classe: STR
+            Linha:  1
+        Lexema: ;
+            Classe: ';'
+            Linha:  1
+        Lexema: def
+            Classe: 'def'
+            Linha:  3
+        Lexema: fatorial
+            Classe: ID
+            Linha:  3
+        Lexema: (
+            Classe: '('
+            Linha:  3
+        Lexema: int
+            Classe: TIPO
+            Linha:  3
+        Lexema: n
+            Classe: ID
+            Linha:  3
+        Lexema: )
+            Classe: ')'
+            Linha:  3
+        Lexema: ::
+            Classe: '::'
+            Linha:  3
+        Lexema: int
+            Classe: TIPO
+            Linha:  3
+        Lexema: {
+            Classe: '{'
+            Linha:  3
+        Lexema: int
+            Classe: TIPO
+            Linha:  4
+        Lexema: f
+            Classe: ID
+            Linha:  4
+        Lexema: =
+            Classe: '='
+            Linha:  4
+        Lexema: 1
+            Classe: NUM_INT
+            Linha:  4
+        Lexema: ;
+            Classe: ';'
+            Linha:  4
+        Lexema: while
+            Classe: 'while'
+            Linha:  5
+        Lexema: (
+            Classe: '('
+            Linha:  5
+        Lexema: n
+            Classe: ID
+            Linha:  5
+
+        ==========================================
+        Lexema invalido identificado!
+            Lexema: ?
+            Linha:  5
+            Inicio: 71
+            Fim:    71
+        ==========================================
+
+        Lexema: 1
+            Classe: NUM_INT
+            Linha:  5
+        Lexema: )
+            Classe: ')'
+            Linha:  5
+        Lexema: {
+            Classe: '{'
+            Linha:  5
+        Lexema: f
+            Classe: ID
+            Linha:  6
+        Lexema: =
+            Classe: '='
+            Linha:  6
+        Lexema: f
+            Classe: ID
+            Linha:  6
+        Lexema: *
+            Classe: OP_ARIT
+            Linha:  6
+        Lexema: n
+            Classe: ID
+            Linha:  6
+        Lexema: ;
+            Classe: ';'
+            Linha:  6
+        Lexema: n
+            Classe: ID
+            Linha:  7
+        Lexema: --
+            Classe: '--'
+            Linha:  7
+        Lexema: ;
+            Classe: ';'
+            Linha:  7
+        Lexema: }
+            Classe: '}'
+            Linha:  8
+        Lexema: return
+            Classe: 'return'
+            Linha:  9
+        Lexema: f
+            Classe: ID
+            Linha:  9
+        Lexema: ;
+            Classe: ';'
+            Linha:  9
+        Lexema: }
+            Classe: '}'
+            Linha:  10
+        Lexema: ;
+            Classe: ';'
+            Linha:  10
+        Lexema: def
+            Classe: 'def'
+            Linha:  12
+        Lexema: main
+            Classe: 'main'
+            Linha:  12
+        Lexema: ()
+            Classe: '()'
+            Linha:  12
+        Lexema: ::
+            Classe: '::'
+            Linha:  12
+        Lexema: int
+            Classe: TIPO
+            Linha:  12
+        Lexema: {
+            Classe: '{'
+            Linha:  12
+        Lexema: int
+            Classe: TIPO
+            Linha:  13
+        Lexema: n
+            Classe: ID
+            Linha:  13
+        Lexema: =
+            Classe: '='
+            Linha:  13
+        Lexema: 0
+            Classe: NUM_INT
+            Linha:  13
+        Lexema: ;
+            Classe: ';'
+            Linha:  13
+        Lexema: read
+            Classe: ID
+            Linha:  14
+        Lexema: (
+            Classe: '('
+            Linha:  14
+
+        ==========================================
+        Lexema invalido identificado!
+            Lexema: &
+            Linha:  14
+            Inicio: 178
+            Fim:    178
+        ==========================================
+
+        Lexema: n
+            Classe: ID
+            Linha:  14
+        Lexema: )
+            Classe: ')'
+            Linha:  14
+        Lexema: ;
+            Classe: ';'
+            Linha:  14
+        Lexema: n
+            Classe: ID
+            Linha:  15
+        Lexema: =
+            Classe: '='
+            Linha:  15
+        Lexema: fatorial
+            Classe: ID
+            Linha:  15
+        Lexema: (
+            Classe: '('
+            Linha:  15
+        Lexema: n
+            Classe: ID
+            Linha:  15
+        Lexema: )
+            Classe: ')'
+            Linha:  15
+        Lexema: ;
+            Classe: ';'
+            Linha:  15
+        Lexema: print
+            Classe: ID
+            Linha:  16
+        Lexema: (
+            Classe: '('
+            Linha:  16
+        Lexema: n
+            Classe: ID
+            Linha:  16
+        Lexema: )
+            Classe: ')'
+            Linha:  16
+        Lexema: ;
+            Classe: ';'
+            Linha:  16
+        Lexema: return
+            Classe: 'return'
+            Linha:  17
+        Lexema: 0
+            Classe: NUM_INT
+            Linha:  17
+        Lexema: ;
+            Classe: ';'
+            Linha:  17
+        Lexema: }
+            Classe: '}'
+            Linha:  18
+        Lexema: ;
+            Classe: ';'
+            Linha:  18
+
+## 5.1 Erros sintáticos
+
+### hello_world.cpm
+
+- Sem erro:
+
+        use "stdio";
+
+        def main() :: int {
+            print("Hello, World!");
+            return 0;
+        };
+
+    O código sem nenhum erro sintático gera a seguinte árvore:
+
+    <img src="./images/hello_word.png" width="1000">
+
+- Com erro:
+
+        use "stdio";
+
+        def main() :: int {
+            print(~"Hello, World!");
+            returm 0;
         }
 
-5.2. Gerador de Gramática
+    O código com um erro sintático ao escrever "returm" onde deveria ser "return" gera a seguinte árvore:
 
-O código abaixo foi usado para gerar os tokens dos algoritmos de exemplo. Nele estão definidos as classes e suas expressões regulares.
+    <img src="./images/ERRO_SINTATICO-hello_world.png" width="1000">
+
+### fatorial.cpm
+
+- Sem erro:
+
+        use "stdio";
+
+        def fatorial(int n) :: int {
+            int f = 1;
+            while (n > 1) {
+                f = f * n;
+                n--;
+            }
+            return f;
+        };
+
+        def main() :: int {
+            int n = 0;
+            read(n);
+            n = fatorial(n);
+            print(n);
+            return 0;
+        };
+
+    O código sem nenhum erro sintático gera a seguinte árvore:
+
+    <img src="./images/fatorial.png" width="1000">
+
+- Com erro:
+
+        use "stdio";
+
+        def fatorial(int n) :: int {
+            int f = 1;
+            while (n > 1) {
+                f = f * n;
+                n--;
+            return f;
+        };
+
+        def main() :: int {
+            int n != 0;
+            read(n);
+            n = fatorial(n);
+            print(n);
+            return 0;
+        };
+
+    O código com dois erros sintáticos ao não fechar as chaves "}" do while e atribuir um valor com "!=", gera a seguinte árvore:
+
+    <img src="./images/ERRO_SINTATICO-fatorial.png" width="1000">
+
+# 6. Detalhes da Implementação
+
+## 6.1. Algoritmos de exemplo
+
+A equipe criou códigos de exemplo da língugem que deram uma base forte para iniciar suas definições formais. Todos são individuais e
+demonstram alguma característica diferente dos outros.
+
+### 6.1.1 hello_world.cpm
+
+    use "stdio";
+
+    def main() :: int {
+        print("Hello, World!");
+        return 0;
+    };
+
+### 6.1.2. plus_minus.cpm
+
+    use "stdio";
+
+    def main() :: int {
+        int c = 0;
+        read(c);
+        c+-;
+        print(c);
+        return 0;
+    };
+
+### 6.1.3. fatorial.cpm
+
+    use "stdio";
+
+    def fatorial(int n) :: int {
+        int f = 1;
+        while (n > 1) {
+            f = f * n;
+            n--;
+        }
+        return f;
+    };
+
+    def main() :: int {
+        int n = 0;
+        read(n);
+        n = fatorial(n);
+        print(n);
+        return 0;
+    };
+
+### 6.1.4. conversor_temeperatura.cpm
+
+    use "stdio";
+
+    def Celsius_para_Fahrenheit(float c) :: float {
+        float f = (9.0 * c / 5.0) + 32.0;
+        return f;
+    };
+
+    def main() :: int {
+
+        float c = 0.0;
+        read(c);
+
+        float f = 0;
+        f = Celsius_para_Fahrenheit(c);
+        print(f);
+
+        return 0;
+    };
+
+### 6.1.5. media_aritmetica.cpm
+
+    use "stdio";
+
+    def media_aritmetica(int a, int b, int c) :: float {
+        float media = (a + b + c) / 3.0;
+        return media;
+    };
+
+    def main() :: int {
+
+        int a = 0, b = 0, c = 0;
+        read(a);
+        read(b);
+        read(c);
+
+        float media = 0.0;
+        media = media_aritmetica(a, b, c);
+        print(media);
+
+        return 0;
+    };
+
+### 6.1.6. soma_naturais.cpm
+
+    use "stdio";
+
+    def soma_naturais(int n) :: int {
+        int soma = 0;
+        int i = 1;
+        while (i <= n) {
+            soma = soma + i;
+            i++;
+        }
+        return soma;
+    };
+
+    def main() :: int {
+        int n = 0;
+        read(n);
+        int soma = 0;
+        soma = soma_naturais(n);
+        print(soma);
+        return 0;
+    };
+
+### 6.1.7. distancia_pontos.cpm
+
+    use "stdio";
+
+    def distancia_pontos(float x1, float y1, float x2, float y2) :: float {
+        float dx = x2 - x1;
+        float dy = y2 - y1;
+        float distancia = sqrt(dx*dx + dy*dy);
+        return distancia;
+    };
+
+    def main() :: int {
+        float x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+        read(x1);
+        read(y1);
+        read(x2);
+        read(y2);
+
+        float distancia = 0.0;
+        distancia = distancia_pontos(x1, y1, x2, y2);
+        print(distancia);
+
+        return 0;
+    };
+
+### 6.1.8. maximo.cpm
+
+    use "stdio";
+
+    def maximo(int a, int b) :: int {
+        if (a > b) {
+            return a;
+        } else {
+            return b;
+        }
+    };
+
+    def main() :: int {
+        int a = 0, b = 0;
+        read(a);
+        read(b);
+
+        int max = 0;
+        max = maximo(a, b);
+        print(max);
+
+        return 0;
+    };
+
+### 6.1.9. ordena_numeros.cpm
+
+    use "stdio";
+
+    def ordena_numeros(int a, int b, int c) :: (int, int, int) {
+        if (a > b) {
+            int temp = a;
+            a = b;
+            b = temp;
+        }
+        if (a > c) {
+            int temp = a;
+            a = c;
+            c = temp;
+        }
+        if (b > c) {
+            int temp = b;
+            b = c;
+            c = temp;
+        }
+        return (a, b, c);
+    };
+
+    def main() :: int {
+        int a = 0, b = 0, c = 0;
+        read(a);
+        read(b);
+        read(c);
+
+        (a, b, c) = ordena_numeros(a, b, c);
+        print(a);
+        print(b);
+        print(c);
+
+        return 0;
+    };
+
+### 6.1.10. area_circulo.cpm
+
+    use "stdio";
+
+    def area_circulo(float raio) :: float {
+        float area = 3.14159 * raio * raio;
+        return area;
+    };
+
+    def main() :: int {
+        float raio = 0.0;
+        read(raio);
+
+        float area = 0.0;
+        area = area_circulo(raio);
+        print(area);
+
+        return 0;
+
+## 6.2. Definições Léxicas e Sintáticas
+
+Em seguida, foram criadas as definições léxicas e sintáticas da linguagem C+-, especificando quais palavras pertenciam a linguagem e em quais classes, e as regras de sua GLC. Abaixo está o código fonte do arquivo `cpm.g4`do **ANTLR** para as definições léxicas, sintáticas. Com base nele, executamos o arquivo binário do **ANTLR** para gerar os códigos fontes.
+
+`cpm.g4`
 
     grammar cpm;
+
+    @header {
+        package antlr;
+    }
 
     /*
     -------------------------------------------- LEXER RULES ------------------------------------------------
@@ -659,19 +1270,17 @@ O código abaixo foi usado para gerar os tokens dos algoritmos de exemplo. Nele 
         ;
 
     funcao_principal:
-        DEF MAIN '()' '::' TIPO bloco
+        DEF MAIN '()' '::' TIPO bloco ';'
         ;
 
     global:
         (
         bloco
-        | expressao ';'
+        | expressao
         | declaracao
         | repeticao
         | condicional
-        | chamada ';'
-        | importar ';'
-        | retornar ';'
+        | chamada
         )*
         ;
 
@@ -682,13 +1291,11 @@ O código abaixo foi usado para gerar os tokens dos algoritmos de exemplo. Nele 
         bloco
         | vetor
         | funcao
-        | expressao ';'
+        | expressao
         | declaracao
         | repeticao
         | condicional
-        | chamada ';'
-        | importar ';'
-        | retornar ';'
+        | chamada
     )*
     '}'
     ;
@@ -701,17 +1308,24 @@ O código abaixo foi usado para gerar os tokens dos algoritmos de exemplo. Nele 
 
     // Necessário para não causar recursão à esquerda nas expressões
     // Mudar nome
-    tipos_primitivos:
-        NUM_FLOAT | NUM_INT | STR | ID | BOOL | funcao | vetor
+
+    argumento:
+        NUM_FLOAT
+        | NUM_INT
+        | STR
+        | BOOL
+        | ID
+        | vetor
+        | funcao
         ;
 
     tipos_atribuicao:
-        tipos_primitivos
+        argumento
         | expressao
         ;
 
     parametro:
-        ((tipos_primitivos | expressao) (',' (tipos_primitivos | expressao))*)
+        ((argumento | expressao) (',' (argumento | expressao))*)
         ;
 
     indice:
@@ -723,7 +1337,7 @@ O código abaixo foi usado para gerar os tokens dos algoritmos de exemplo. Nele 
         ;
 
     fator_aritmetico:
-        tipos_primitivos | '(' expressao_aritmetica ')'
+        argumento | '(' expressao_aritmetica ')'
         ;
 
     termo_logico:
@@ -739,7 +1353,7 @@ O código abaixo foi usado para gerar os tokens dos algoritmos de exemplo. Nele 
         ;
 
     fator_relacional:
-        tipos_primitivos  | BOOL | '(' expressao_relacional ')'
+        argumento  | BOOL | '(' expressao_relacional ')'
         ;
 
     /*
@@ -751,10 +1365,15 @@ O código abaixo foi usado para gerar os tokens dos algoritmos de exemplo. Nele 
         expressao_aritmetica
         | expressao_logica
         | expressao_relacional
+        | expressao_reduzida
+        ;
+
+    expressao_reduzida:
+        ID (MENOSMENOS | MAISMAIS | MAISMENOS)
         ;
 
     expressao_aritmetica:
-        termo_aritmetico ((OP_ARIT (termo_aritmetico | termo_relacional)) | MENOSMENOS | MAISMAIS | MAISMENOS)*
+        termo_aritmetico ((OP_ARIT (termo_aritmetico | termo_relacional)))*
         ;
 
     expressao_logica:
@@ -771,22 +1390,22 @@ O código abaixo foi usado para gerar os tokens dos algoritmos de exemplo. Nele 
     */
 
     declaracao:
-        declaracao_variavel ';'
+        declaracao_variavel
         | declaracao_vetor
         | declaracao_funcao
         ;
 
     declaracao_variavel:
-        TIPO ID ('=' tipos_atribuicao)?
+        TIPO ID ('=' (argumento | expressao))? ';'
         ;
 
     declaracao_vetor:
-        TIPO '[' (NUM_INT | ID | vetor) ']'
+        TIPO '[' (NUM_INT | ID | vetor) ']' ID ('=' '{' parametro? '}')? ';'
         ;
 
     declaracao_funcao:
-        DEF ID '(' (TIPO ID (',' TIPO ID)*) ')' '::' TIPO  bloco |
-        DEF ID '()' '::' TIPO  bloco  // Gambiarra
+        DEF ID '(' (TIPO ID (',' TIPO ID)*) ')' '::' TIPO  bloco? ';'
+        | DEF ID '()' '::' TIPO  bloco? ';'
         ;
 
     /*
@@ -804,7 +1423,7 @@ O código abaixo foi usado para gerar os tokens dos algoritmos de exemplo. Nele 
         ;
 
     repeticao_for:
-        FOR '(' declaracao_variavel ';' expressao ';' (ID (MAISMAIS | MAISMENOS | MENOSMENOS)) ')' bloco
+        FOR '(' declaracao_variavel expressao ';' expressao_reduzida ')' bloco
         ;
 
     /*
@@ -838,14 +1457,29 @@ O código abaixo foi usado para gerar os tokens dos algoritmos de exemplo. Nele 
     chamada:
         chamada_funcao
         | chamada_atribuicao
+        | chamada_importar
+        | chamada_retornar
+        | chamada_reduzida
+        ;
+
+    chamada_reduzida:
+        expressao_reduzida ';'
         ;
 
     chamada_funcao:
-        ID '(' (tipos_atribuicao | /*vazio*/) ')'
+        ID '(' parametro? ')'  ';'
         ;
 
     chamada_atribuicao:
-        (ID | vetor) '=' tipos_atribuicao
+        (ID | vetor) '=' tipos_atribuicao ';'
+        ;
+
+    chamada_importar:
+        USE STR ';'
+        ;
+
+    chamada_retornar:
+        RETURN tipos_atribuicao ';'
         ;
 
     /*
@@ -853,25 +1487,19 @@ O código abaixo foi usado para gerar os tokens dos algoritmos de exemplo. Nele 
     ----------------------------------------------------------------------------------------------------------
     */
 
-    importar:
-        USE STR
-        ;
-
     vetor:
         ID '[' indice ']'
         ;
 
     funcao:
-        ID '(' parametro ')'
+        ID '(' parametro? ')'
         ;
 
-    retornar:
-        RETURN tipos_atribuicao
-        ;
+## 6.3 Analisador Léxico
 
-### 5.3. Análise Léxica
+Foi criado um código fonte para ler um arquivo fonte da linguagem C+- e imprimir o resultado de sua análise léxica. A execução imprime os lexemas, juntamente com suas classes e linhas que estão presentes. Também, em caso de lexema inválido, é chamada a função para imprimir uma mensagem de erro informando qual o lexema não identificado, a linha e os índices de início e fim do mesmo.
 
-O código abaixo foi usado para imprimir o resultado da análise léxica dos algoritmos de exemplo. Nele estão sendo impressos os lexemas, juntamente com sua classe e linha que está presente. Também, em caso de lexema inválido, é chamada a função para imprimir uma mensagem de erro informando qual o lexema não identificado, a linha e os índices de início e fim do mesmo. Para ler um algoritmo de exemplo e fazer a análise léxica, é feita uma leitura do nome do arquivo desejável.
+    import antlr.cpmLexer;
 
     import org.antlr.v4.runtime.CharStream;
     import org.antlr.v4.runtime.CharStreams;
@@ -880,7 +1508,7 @@ O código abaixo foi usado para imprimir o resultado da análise léxica dos alg
     import java.io.IOException;
     import java.util.Scanner;
 
-    public class testarLexer {
+    public class AnalisadorLexico {
 
         private static Scanner scanner = new Scanner(System.in);
 
@@ -902,7 +1530,7 @@ O código abaixo foi usado para imprimir o resultado da análise léxica dos alg
 
         public static void  main (String[] args){
             System.out.print("Entre o código fonte: ");
-            String filename = "./codigos/" + scanner.nextLine();
+            String filename = "./src/codigos/" + scanner.nextLine();
             try {
                 CharStream input = CharStreams.fromFileName(filename);
                 cpmLexer lexer = new cpmLexer(input);
@@ -925,24 +1553,6 @@ O código abaixo foi usado para imprimir o resultado da análise léxica dos alg
         }
     }
 
-## 6. Repositório no GitHub
+# 6. Repositório no GitHub
 
-A implementação do analisador léxico está disponível em: https://github.com/jgkzanella/analisador-lexico-cpm.
-
-## Ambiente
-
-- Toda a implementação foi desenvolvida e testada em sistema Linux utilizando JDK.
-
-      sudo apt install default-jdk
-
-- Para gerar o analisador léxico e o parser:
-
-      java -jar ./antlr-4.11.1-complete.jar ./src/cpm.g4
-
-- Os códigos fontes da linguagem CPM devem estar no diretório ```./codigos/``` para teste.
-
-- Testando o lexer:
-
-  - Compilar e executar `./src/testarLexer.java` utilizando a dependência `antlr-4.11.1-complete.jar`.
-
-  - Digitar o nome de um arquivo de código fonte da pasta `./codigos/`. Exemplo: `hello_world.cpm`
+Toda a implementação da linguagem C+- está disponível em: https://github.com/jgkzanella/analisador-lexico-cpm.

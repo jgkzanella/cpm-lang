@@ -1,0 +1,20 @@
+use "stdio";
+
+def soma_naturais(int n) :: int {
+    int soma = 0;
+    int i = 1;
+    while (i <= n) {
+        soma = soma + i;
+        i++;
+    }
+    return soma;
+};
+
+def main() :: int {
+    int n = 0;
+    read(n);
+    int soma = 0;
+    soma = soma_naturais(n);
+    print(soma);
+    return 0;
+};

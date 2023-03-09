@@ -1,6 +1,9 @@
 use "stdio";
 
 def main() :: int {
-    print("Hello, World!");
+
+    int x = 10;
+    x = "Hello!";
+
     return 0;
 };
