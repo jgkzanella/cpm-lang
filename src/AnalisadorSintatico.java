@@ -39,11 +39,11 @@ public class AnalisadorSintatico {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         TreeViewer viewer = new TreeViewer(Arrays.asList(parser.getRuleNames()), tree);
-        viewer.setScale(1.5);//aumenta o tamanho da fonte
+        viewer.setScale(1.0);//aumenta o tamanho da fonte
         panel.add(viewer);
 
         // cria uma janela para o painel.
-        JFrame frame = new JFrame("Árvore Sintática");
+        JFrame frame = new JFrame("Árvore Sintática do C+-");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(panel);
         frame.pack();
