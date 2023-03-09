@@ -109,7 +109,7 @@ programa:
     ;
 
 funcao_principal:
-    DEF MAIN '()' '::' TIPO bloco
+    DEF MAIN '()' '::' TIPO bloco ';'
     ;
 
 global:
@@ -152,8 +152,8 @@ argumento:
     NUM_FLOAT
     | NUM_INT
     | STR
-    | ID
     | BOOL
+    | ID
     | vetor
     | funcao
     ;
@@ -243,8 +243,8 @@ declaracao_vetor:
     ;
 
 declaracao_funcao:
-    DEF ID '(' (TIPO ID (',' TIPO ID)*) ')' '::' TIPO  bloco |
-    DEF ID '()' '::' TIPO  bloco  // Gambiarra
+    DEF ID '(' (TIPO ID (',' TIPO ID)*) ')' '::' TIPO  bloco? ';'
+    | DEF ID '()' '::' TIPO  bloco? ';'
     ;
 
 /*
