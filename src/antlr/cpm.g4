@@ -307,6 +307,7 @@ chamada_reduzida:
 
 chamada_funcao:
     ID '(' parametro? ')'  ';'
+    | ID '()' ';'
     ;
 
 chamada_atribuicao:

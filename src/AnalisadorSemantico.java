@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class AnalisadorSemantico {
     public static void main(String[] args) {
-        cpmParser parser = getParser("/home/joaogkz/IdeaProjects/cpm-lang/src/codigos/teste.cpm");
+        cpmParser parser = getParser("/home/joaogkz/IdeaProjects/cpm-lang/src/codigos/fatorial.cpm");
 
         ParseTree arvore_sintatica = parser.programa();
 

@@ -1,1 +1,11 @@
-(true and x);
+def teste(int x, int y) :: void;
+
+def main() :: int {
+    teste(20, 30, 50);
+
+    teste(x, y);
+
+    int[n] vet;
+
+    teste(var, 10);
+};
