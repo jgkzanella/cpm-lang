@@ -3,4 +3,4 @@ use "stdio";
 def main() :: int {
     print(~"Hello, World!");
     returm 0;
-}
+};
