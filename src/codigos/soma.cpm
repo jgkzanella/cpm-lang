@@ -1,0 +1,6 @@
+def soma(int x, int y) :: int {
+    int x = 10;
+    int y = 20;
+    z = x + y;
+};
+

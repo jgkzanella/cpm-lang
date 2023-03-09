@@ -192,7 +192,7 @@ termo_relacional:
     ;
 
 fator_relacional:
-    argumento  | BOOL | '(' expressao_relacional ')'
+    argumento | '(' expressao_relacional ')'
     ;
 
 /*

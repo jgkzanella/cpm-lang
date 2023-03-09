@@ -890,7 +890,7 @@ Abaixo estão as regras da GLC da linguagem C+-,  divididas em grupos.
             Classe: ';'
             Linha:  18
 
-## 5.1 Erros sintáticos
+## 5.2 Erros sintáticos
 
 ### hello_world.cpm
 
@@ -915,6 +915,79 @@ Abaixo estão as regras da GLC da linguagem C+-,  divididas em grupos.
             print(~"Hello, World!");
             returm 0;
         }
+
+    O código com um erro sintático ao escrever "returm" onde deveria ser "return" gera a seguinte árvore:
+
+    <img src="./images/ERRO_SINTATICO-hello_world.png" width="1000">
+
+### fatorial.cpm
+
+- Sem erro:
+
+        use "stdio";
+
+        def fatorial(int n) :: int {
+            int f = 1;
+            while (n > 1) {
+                f = f * n;
+                n--;
+            }
+            return f;
+        };
+
+        def main() :: int {
+            int n = 0;
+            read(n);
+            n = fatorial(n);
+            print(n);
+            return 0;
+        };
+
+    O código sem nenhum erro sintático gera a seguinte árvore:
+
+    <img src="./images/fatorial.png" width="1000">
+
+- Com erro:
+
+        use "stdio";
+
+        def fatorial(int n) :: int {
+            int f = 1;
+            while (n > 1) {
+                f = f * n;
+                n--;
+            return f;
+        };
+
+        def main() :: int {
+            int n != 0;
+            read(n);
+            n = fatorial(n);
+            print(n);
+            return 0;
+        };
+
+    O código com dois erros sintáticos ao não fechar as chaves "}" do while e atribuir um valor com "!=", gera a seguinte árvore:
+
+    <img src="./images/ERRO_SINTATICO-fatorial.png" width="1000">
+
+## 5.3 Erros semânticos
+
+### soma.cpm
+
+- Sem erro:
+
+        int x = 10;
+        int y = 20;
+        int z = x + y;
+
+    Ao passar o código pelo Analisador Semântica, nenhum erro semnântico será notificado.
+
+- Com erro:
+
+    int x = 10;
+    int y = 20;
+    z = x + y;
 
     O código com um erro sintático ao escrever "returm" onde deveria ser "return" gera a seguinte árvore:
 
