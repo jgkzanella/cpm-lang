@@ -251,72 +251,72 @@ Abaixo estão as regras da GLC da linguagem C+-,  divididas em grupos.
 
 - Sem erro:
 
-    use "stdio";
+        use "stdio";
 
-    def main() :: int {
-        print("Hello, World!");
-        return 0;
-    };
+        def main() :: int {
+            print("Hello, World!");
+            return 0;
+        };
 
     O código sem nenhum erro gera a seguinte saída de tokens pelo nosso Analisador Léxico:
 
-    Lexema: use
-        Classe: 'use'
-        Linha:  1
-    Lexema: "stdio"
-        Classe: STR
-        Linha:  1
-    Lexema: ;
-        Classe: ';'
-        Linha:  1
-    Lexema: def
-        Classe: 'def'
-        Linha:  3
-    Lexema: main
-        Classe: 'main'
-        Linha:  3
-    Lexema: ()
-        Classe: '()'
-        Linha:  3
-    Lexema: ::
-        Classe: '::'
-        Linha:  3
-    Lexema: int
-        Classe: TIPO
-        Linha:  3
-    Lexema: {
-        Classe: '{'
-        Linha:  3
-    Lexema: print
-        Classe: ID
-        Linha:  4
-    Lexema: (
-        Classe: '('
-        Linha:  4
-    Lexema: "Hello, World!"
-        Classe: STR
-        Linha:  4
-    Lexema: )
-        Classe: ')'
-        Linha:  4
-    Lexema: ;
-        Classe: ';'
-        Linha:  4
-    Lexema: return
-        Classe: 'return'
-        Linha:  5
-    Lexema: 0
-        Classe: NUM_INT
-        Linha:  5
-    Lexema: ;
-        Classe: ';'
-        Linha:  5
-    Lexema: }
-        Classe: '}'
-        Linha:  6
-    Lexema: ;
-        Classe: ';'
-        Linha:  6
+        Lexema: use
+            Classe: 'use'
+            Linha:  1
+        Lexema: "stdio"
+            Classe: STR
+            Linha:  1
+        Lexema: ;
+            Classe: ';'
+            Linha:  1
+        Lexema: def
+            Classe: 'def'
+            Linha:  3
+        Lexema: main
+            Classe: 'main'
+            Linha:  3
+        Lexema: ()
+            Classe: '()'
+            Linha:  3
+        Lexema: ::
+            Classe: '::'
+            Linha:  3
+        Lexema: int
+            Classe: TIPO
+            Linha:  3
+        Lexema: {
+            Classe: '{'
+            Linha:  3
+        Lexema: print
+            Classe: ID
+            Linha:  4
+        Lexema: (
+            Classe: '('
+            Linha:  4
+        Lexema: "Hello, World!"
+            Classe: STR
+            Linha:  4
+        Lexema: )
+            Classe: ')'
+            Linha:  4
+        Lexema: ;
+            Classe: ';'
+            Linha:  4
+        Lexema: return
+            Classe: 'return'
+            Linha:  5
+        Lexema: 0
+            Classe: NUM_INT
+            Linha:  5
+        Lexema: ;
+            Classe: ';'
+            Linha:  5
+        Lexema: }
+            Classe: '}'
+            Linha:  6
+        Lexema: ;
+            Classe: ';'
+            Linha:  6
 
 - Com erro:
 
