@@ -1,6 +1,6 @@
 def main() :: int {
     int a = 10;
-    int b = 20;
+    b = 20;
     int s = 0;
     s = a + b;
     return 0;

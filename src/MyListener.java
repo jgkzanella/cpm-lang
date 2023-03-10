@@ -19,7 +19,7 @@ public class MyListener extends cpmBaseListener {
         // se tentar pegar o "=" e não existir (retorna nulo), adiciona no vetor
         // de variáveis não inicializadas
         try {
-            ctx.ATR().getText();
+            ctx.ATR();
         }
         catch(NullPointerException e) {
             nao_inicializadas.add(id);

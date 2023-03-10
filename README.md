@@ -31,9 +31,12 @@
   - [5.1 Erros léxicos](#51-erros-léxicos)
     - [hello\_world.cpm](#hello_worldcpm)
     - [fatorial.cpm](#fatorialcpm)
-  - [5.1 Erros sintáticos](#51-erros-sintáticos)
+  - [5.2 Erros sintáticos](#52-erros-sintáticos)
     - [hello\_world.cpm](#hello_worldcpm-1)
     - [fatorial.cpm](#fatorialcpm-1)
+  - [5.3 Erros semânticos](#53-erros-semânticos)
+    - [soma.cpm](#somacpm)
+    - [fatorial.cpm](#fatorialcpm-2)
 - [6. Detalhes da Implementação](#6-detalhes-da-implementação)
   - [6.1. Algoritmos de exemplo](#61-algoritmos-de-exemplo)
     - [6.1.1 hello\_world.cpm](#611-hello_worldcpm)
@@ -44,7 +47,7 @@
     - [6.1.6. soma\_naturais.cpm](#616-soma_naturaiscpm)
     - [6.1.7. distancia\_pontos.cpm](#617-distancia_pontoscpm)
     - [6.1.8. maximo.cpm](#618-maximocpm)
-    - [6.1.9. ordena\_numeros.cpm](#619-ordena_numeroscpm)
+    - [6.1.9. soma.cpm](#619-somacpm)
     - [6.1.10. area\_circulo.cpm](#6110-area_circulocpm)
   - [6.2. Definições Léxicas e Sintáticas](#62-definições-léxicas-e-sintáticas)
   - [6.3 Analisador Léxico](#63-analisador-léxico)
@@ -241,7 +244,17 @@ Abaixo estão as regras da GLC da linguagem C+-,  divididas em grupos.
 
 # 4. Definição Semântica
 
+Foi implementado as seguintes regras semânticas para o C+-:
 
+- Checagem de variáveis não declaradas
+
+- Checagem de declarações duplicadas de variáveis
+
+- Checagem de escopo de variáveis (parcialmente)
+
+E ficou para ainda ser implementado:
+
+- Checagem de tipo
 
 # 5 Casos de Teste
 
@@ -892,6 +905,8 @@ Abaixo estão as regras da GLC da linguagem C+-,  divididas em grupos.
 
 ## 5.2 Erros sintáticos
 
+A etapa final do trabalho foi a implementação do Analisador Sintático, que também alertará sobre erros léxicos e sintáticos.
+
 ### hello_world.cpm
 
 - Sem erro:
@@ -903,7 +918,7 @@ Abaixo estão as regras da GLC da linguagem C+-,  divididas em grupos.
             return 0;
         };
 
-    O código sem nenhum erro sintático gera a seguinte árvore:
+    O código sem nenhum erro gera a seguinte árvore:
 
     <img src="./images/hello_word.png" width="1000">
 
@@ -977,21 +992,29 @@ Abaixo estão as regras da GLC da linguagem C+-,  divididas em grupos.
 
 - Sem erro:
 
-        int x = 10;
-        int y = 20;
-        int z = x + y;
+    def main() :: int {
+        int a = 10;
+        int b = 20;
+        int s = 0;
+        s = a + b;
+        return 0;
+    };
 
-    Ao passar o código pelo Analisador Semântica, nenhum erro semnântico será notificado.
+    Ao passar o código pelo Analisador Semântica, nenhum erro será notificado.
 
 - Com erro:
 
-    int x = 10;
-    int y = 20;
-    z = x + y;
+        def main() :: int {
+            int a = 10;
+            b = 20;
+            int s = 0;
+            s = a + b;
+            return 0;
+        };
 
-    O código com um erro sintático ao escrever "returm" onde deveria ser "return" gera a seguinte árvore:
+    Ao executar o código, um erro semântico é alertado pois a variável b não foi declarada antes de ser atribuida um valor.
 
-    <img src="./images/ERRO_SINTATICO-hello_world.png" width="1000">
+        Variável 'b' não foi declarada mas foi usada na linha 5
 
 ### fatorial.cpm
 
@@ -1016,9 +1039,7 @@ Abaixo estão as regras da GLC da linguagem C+-,  divididas em grupos.
             return 0;
         };
 
-    O código sem nenhum erro sintático gera a seguinte árvore:
-
-    <img src="./images/fatorial.png" width="1000">
+Ao passar o código pelo Analisador Semântica, nenhum erro será notificado.
 
 - Com erro:
 
@@ -1033,14 +1054,20 @@ Abaixo estão as regras da GLC da linguagem C+-,  divididas em grupos.
         };
 
         def main() :: int {
-            int n != 0;
+            int n = 0;
             read(n);
             n = fatorial(n);
             print(n);
             return 0;
         };
 
-    O código com dois erros sintáticos ao não fechar as chaves "}" do while e atribuir um valor com "!=", gera a seguinte árvore:
+    O código ao passar pelo analisador semântico irá alertar sobre a variável `n` não ter sido declarada, mesmo sendo declarada nos argumentos, isto deverá ser corrigido. A falta de um fecha chaves leva a um erro sintático, o caracter `&` leva a um erro léxico. Além disso, como não foi implementado as funções uma forma de chamar funções externas de outro arquivo como `stdio`, as funções `print` e `read` são alertadas como não declaradas, gerando erro semântico.
+
+        line 9:1 extraneous input ';' expecting {'use', TIPO, BOOL, 'def', 'return', 'if', 'ifse', 'else', 'while', 'for', '{', '}', '(', NUM_INT, NUM_FLOAT, STR, ID}
+        Variável 'n' não foi declarada mas foi usada na linha 5
+        Variável 'n' não foi declarada mas foi usada na linha 6
+        Função 'read' não foi declarada mas foi usada na linha 13
+        Função 'print' não foi declarada mas foi usada na linha 16
 
     <img src="./images/ERRO_SINTATICO-fatorial.png" width="1000">
 
@@ -1209,40 +1236,19 @@ demonstram alguma característica diferente dos outros.
         return 0;
     };
 
-### 6.1.9. ordena_numeros.cpm
+### 6.1.9. soma.cpm
 
-    use "stdio";
-
-    def ordena_numeros(int a, int b, int c) :: (int, int, int) {
-        if (a > b) {
-            int temp = a;
-            a = b;
-            b = temp;
-        }
-        if (a > c) {
-            int temp = a;
-            a = c;
-            c = temp;
-        }
-        if (b > c) {
-            int temp = b;
-            b = c;
-            c = temp;
-        }
-        return (a, b, c);
+    def soma(int x, int y) :: int {
+        int z = 0;
+        z = x + y;
+        return z;
     };
 
     def main() :: int {
-        int a = 0, b = 0, c = 0;
-        read(a);
-        read(b);
-        read(c);
-
-        (a, b, c) = ordena_numeros(a, b, c);
-        print(a);
-        print(b);
-        print(c);
-
+        int a = 10;
+        int b = 20;
+        int s = 0;
+        s = soma(a, b);
         return 0;
     };
 
@@ -1264,6 +1270,8 @@ demonstram alguma característica diferente dos outros.
         print(area);
 
         return 0;
+
+    };
 
 ## 6.2. Definições Léxicas e Sintáticas
 
@@ -1611,6 +1619,8 @@ Foram criadas as definições léxicas e sintáticas da linguagem C+-, especific
 
 Foi criado um código para ler um arquivo fonte da linguagem C+- e imprimir o resultado de sua análise léxica. A execução imprime os lexemas, juntamente com suas classes e linhas que estão presentes. Também, em caso de lexema inválido, é chamada a função para imprimir uma mensagem de erro informando qual o lexema não identificado, a linha e os índices de início e fim do mesmo.
 
+`AnalisadorLexico.java`
+
     import antlr.cpmLexer;
 
     import org.antlr.v4.runtime.CharStream;
@@ -1669,6 +1679,8 @@ Foi criado um código para ler um arquivo fonte da linguagem C+- e imprimir o re
 
 Foi criado um código para ler um arquivo fonte da linguagem C+- e mostrar sua árvore sintática.
 
+`AnalisadorSintatico.java`
+
     import java.util.Arrays;
     import java.util.Scanner;
 
@@ -1723,6 +1735,343 @@ Foi criado um código para ler um arquivo fonte da linguagem C+- e mostrar sua �
     }
 
 ## 6.5. Analisador Semântico
+
+O analisador semântico é a última parte implementada, sendo o front-end de nosso trabalho.
+
+`MyListener.java`
+
+    import antlr.cpmBaseListener;
+    import antlr.cpmParser;
+
+    import java.util.ArrayList;
+    import java.util.HashMap;
+    import java.util.List;
+    import java.util.Map;
+
+    public class MyListener extends cpmBaseListener {
+        private Map<String,String> ids_declarados = new HashMap<String,String>();
+        private Map<String, Integer> quantidade_parametros = new HashMap<String, Integer>();
+        private List<String> nao_inicializadas = new ArrayList<String>();
+
+        @Override
+        public void exitDeclaracao_variavel(cpmParser.Declaracao_variavelContext ctx) {
+            String tipo = ctx.TIPO().getText();
+            String id = ctx.ID().getText();
+
+            // se tentar pegar o "=" e não existir (retorna nulo), adiciona no vetor
+            // de variáveis não inicializadas
+            try {
+                ctx.ATR();
+            }
+            catch(NullPointerException e) {
+                nao_inicializadas.add(id);
+            }
+
+            // verifica se variável foi anteriormente declarada
+            if (ids_declarados.containsKey(id)) {
+                System.out.println("Declaração duplicada! Variável " + id + " já declarada");
+            }
+            else {
+                ids_declarados.put(id, tipo);
+            }
+        }
+        @Override
+        public void exitDeclaracao_funcao(cpmParser.Declaracao_funcaoContext ctx) {
+            int tam = ctx.TIPO().size();
+            String tipo = String.valueOf(ctx.TIPO(tam - 1));
+            String id = String.valueOf(ctx.ID(0));
+
+            // armazena a quantidade de parâmetros na declaração de uma função
+            quantidade_parametros.put(id, (ctx.ID().size() - 1));
+
+            // verifica se função foi anteriormente declarada
+            if (ids_declarados.containsKey(id)) {
+                System.out.println("Declaração duplicada! Função " + id + " já declarada");
+            }
+            else {
+                ids_declarados.put(id, tipo);
+            }
+        }
+
+        @Override
+        public void exitParametro(cpmParser.ParametroContext ctx) {
+            List<cpmParser.ArgumentoContext> argumentos = ctx.argumento();
+
+            for (cpmParser.ArgumentoContext argumento : argumentos) {
+                // se conseguir pegar uma variável no parâmetro da função,
+                // faz as verificações adequadas
+                try {
+                    String id = argumento.ID().getText();
+                    String linha = String.valueOf(ctx.getStart().getLine());
+
+                    // verifica se variável foi declarada
+                    if (!ids_declarados.containsKey(id)) {
+                        System.out.println("Variável '" + id + "' não foi declarada mas foi usada na linha " + linha);
+                    }
+                    else {
+                        if (nao_inicializadas.contains(id)) {
+                            System.out.println("Variável '" + id + "' não foi inicializada mas foi usada na linha " + linha);
+                        }
+                    }
+                }
+                catch (NullPointerException ignored) {
+
+                }
+            }
+        }
+        @Override
+        public void exitChamada_funcao(cpmParser.Chamada_funcaoContext ctx) {
+            int tam = ctx.parametro().argumento().size();
+            String linha = String.valueOf(ctx.getStart().getLine());
+            String id = ctx.ID().getText();
+
+            // verifica se função não foi declarada
+            if (!ids_declarados.containsKey(id)) {
+                System.out.println("Função '" + id + "' não foi declarada mas foi usada na linha " + linha);
+            }
+            else {
+                // verifica se a quantidade de parâmetros é a mesma da declaração
+                if (tam != quantidade_parametros.get(id)) {
+                    System.out.println("Número incorreto de argumentos na chamada da função '" + id + "' na linha " + linha);
+                }
+            }
+        }
+
+        @Override
+        public void exitChamada_retornar(cpmParser.Chamada_retornarContext ctx) {
+            try {
+                String id = ctx.tipos_atribuicao().argumento().ID().getText();
+                String linha = String.valueOf(ctx.getStart().getLine());
+
+                if (!ids_declarados.containsKey(id)) {
+                    System.out.println("Variável '" + id + "' não foi declarada mas foi usada na linha " + linha);
+                }
+                else {
+                    if (nao_inicializadas.contains(id)) {
+                        System.out.println("Variável '" + id + "' não foi inicializada mas foi usada na linha " + linha);
+                    }
+                }
+            }
+            catch (NullPointerException ignored) {
+
+            }
+        }
+
+        @Override
+        public void exitIndice(cpmParser.IndiceContext ctx) {
+            String id = ctx.ID().getText();
+            String linha = String.valueOf(ctx.getStart().getLine());
+
+            if (ids_declarados.containsKey(id)) {
+                System.out.println("Variável '" + id + "' não foi declarada mas foi usada na linha " + linha);
+            }
+            else {
+                if (nao_inicializadas.contains(id)) {
+                    System.out.println("Variável '" + id + "' não foi inicializada mas foi usada na linha " + linha);
+                }
+            }
+        }
+
+        @Override
+        public void exitExpressao_reduzida(cpmParser.Expressao_reduzidaContext ctx) {
+            String id = ctx.ID().getText();
+            String linha = String.valueOf(ctx.getStart().getLine());
+
+            if (ids_declarados.containsKey(id)) {
+                System.out.println("Variável '" + id + "' não foi declarada mas foi usada na linha " + linha);
+            }
+            else {
+                if (nao_inicializadas.contains(id)) {
+                    System.out.println("Variável '" + id + "' não foi inicializada mas foi usada na linha " + linha);
+                }
+            }
+        }
+
+        @Override
+        public void exitExpressao_aritmetica(cpmParser.Expressao_aritmeticaContext ctx) {
+            List<cpmParser.Termo_aritmeticoContext> termos = ctx.termo_aritmetico();
+
+            for (cpmParser.Termo_aritmeticoContext termo: termos) {
+                List<cpmParser.Fator_aritmeticoContext> fatores = termo.fator_aritmetico();
+
+                for (cpmParser.Fator_aritmeticoContext fator: fatores) {
+                    cpmParser.ArgumentoContext argumento = fator.argumento();
+
+                    // se conseguir pegar uma variável na expressão,
+                    // faz as verificações adequadas
+                    try {
+                        String id = argumento.ID().getText();
+                        String linha = String.valueOf(ctx.getStart().getLine());
+
+                        // verifica se variável foi declarada
+                        if (!ids_declarados.containsKey(id)) {
+                            System.out.println("Variável '" + id + "' não foi declarada mas foi usada na linha " + linha);
+                        }
+                        else {
+                            if (nao_inicializadas.contains(id)) {
+                                System.out.println("Variável '" + id + "' não foi inicializada mas foi usada na linha " + linha);
+                            }
+                        }
+                    }
+                    catch (NullPointerException ignored) {
+
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void exitExpressao_logica(cpmParser.Expressao_logicaContext ctx) {
+            List<cpmParser.Termo_logicoContext> termos = ctx.termo_logico();
+
+            for (cpmParser.Termo_logicoContext termo: termos) {
+                List<cpmParser.Fator_logicoContext> fatores = termo.fator_logico();
+
+                for (cpmParser.Fator_logicoContext fator: fatores) {
+                    // se conseguir pegar uma variável na expressão,
+                    // faz as verificações adequadas
+                    try {
+                        String id = fator.ID().getText();
+                        String linha = String.valueOf(ctx.getStart().getLine());
+
+                        // verifica se variável foi declarada
+                        if (!ids_declarados.containsKey(id)) {
+                            System.out.println("Variável '" + id + "' não foi declarada mas foi usada na linha " + linha);
+                        }
+                        else {
+                            if (nao_inicializadas.contains(id)) {
+                                System.out.println("Variável '" + id + "' não foi inicializada mas foi usada na linha " + linha);
+                            }
+                        }
+                    }
+                    catch (NullPointerException ignored) {
+
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void exitExpressao_relacional(cpmParser.Expressao_relacionalContext ctx) {
+            List<cpmParser.Termo_relacionalContext> termos = ctx.termo_relacional();
+
+            for (cpmParser.Termo_relacionalContext termo: termos) {
+                List<cpmParser.Fator_relacionalContext> fatores = termo.fator_relacional();
+
+                for (cpmParser.Fator_relacionalContext fator: fatores) {
+                    cpmParser.ArgumentoContext argumento = fator.argumento();
+
+                    // se conseguir pegar uma variável na expressão,
+                    // faz as verificações adequadas
+                    try {
+                        String id = argumento.ID().getText();
+                        String linha = String.valueOf(ctx.getStart().getLine());
+
+                        // verifica se variável foi declarada
+                        if (!ids_declarados.containsKey(id)) {
+                            System.out.println("Variável '" + id + "' não foi declarada mas foi usada na linha " + linha);
+                        }
+                        else {
+                            if (nao_inicializadas.contains(id)) {
+                                System.out.println("Variável '" + id + "' não foi inicializada mas foi usada na linha " + linha);
+                            }
+                        }
+                    }
+                    catch (NullPointerException ignored) {
+
+                    }
+                }
+            }
+        }
+        @Override
+        public void exitChamada_atribuicao(cpmParser.Chamada_atribuicaoContext ctx) {
+            // remove da lista pois foi atribuído algum valor
+            nao_inicializadas.remove(ctx.ID().getText());
+        }
+
+        private void verificar_expressoes(cpmParser.Expressao_aritmeticaContext ctx) {
+            List<cpmParser.Termo_aritmeticoContext> termos = ctx.termo_aritmetico();
+
+            for (cpmParser.Termo_aritmeticoContext termo: termos) {
+                List<cpmParser.Fator_aritmeticoContext> fatores = termo.fator_aritmetico();
+
+                for (cpmParser.Fator_aritmeticoContext fator: fatores) {
+                    cpmParser.ArgumentoContext argumento = fator.argumento();
+
+                    // se conseguir pegar uma variável na expressão,
+                    // faz as verificações adequadas
+                    try {
+                        String id = argumento.ID().getText();
+                        String linha = String.valueOf(ctx.getStart().getLine());
+
+                        // verifica se variável foi declarada
+                        if (!ids_declarados.containsKey(id)) {
+                            System.out.println("Variável '" + id + "' não foi declarada mas foi usada na linha " + linha);
+                        }
+                        else {
+                            if (nao_inicializadas.contains(id)) {
+                                System.out.println("Variável '" + id + "' não foi inicializada mas foi usada na linha " + linha);
+                            }
+                        }
+                    }
+                    catch (NullPointerException ignored) {
+
+                    }
+                }
+            }
+        }
+    }
+
+`AnalisadorSemantico.java`
+
+    import antlr.cpmLexer;
+    import antlr.cpmParser;
+
+    import org.antlr.v4.runtime.CharStream;
+    import org.antlr.v4.runtime.CharStreams;
+    import org.antlr.v4.runtime.CommonTokenStream;
+    import org.antlr.v4.runtime.tree.ParseTree;
+    import org.antlr.v4.runtime.tree.ParseTreeWalker;
+
+    import java.io.IOException;
+    import java.util.Scanner;
+
+    public class AnalisadorSemantico {
+
+        private static Scanner scanner = new Scanner(System.in);
+
+        public static void main(String[] args) {
+
+            System.out.print("Entre o código fonte: ");
+            String filename = "./src/codigos/" + scanner.nextLine();
+            //parsing the input
+            cpmParser parser = getParser(filename);
+
+            ParseTree arvore_sintatica = parser.programa();
+
+            // inicia o MyListener, implementação do baseListener
+            MyListener listener = new MyListener();
+
+            ParseTreeWalker walker = new ParseTreeWalker();
+
+            // percorre arvore_sintatica
+            walker.walk(listener, arvore_sintatica);
+        }
+        private static cpmParser getParser(String fileName) {
+            cpmParser parser = null;
+            try {
+                CharStream input = CharStreams.fromFileName(fileName);
+                cpmLexer lexer = new cpmLexer(input);
+                CommonTokenStream tokens = new CommonTokenStream(lexer);
+                parser = new cpmParser(tokens);
+            }
+            catch(IOException e){
+                e.printStackTrace();
+            }
+            return parser;
+        }
+
+    }
 
 ## 6.6 Arquivos gerados pelo ANTLR e criados
 
@@ -1816,4 +2165,4 @@ Os arquivos gerados pelo ANTLR com base em nossas definições junto aos nossos 
 
 # 7. Repositório no GitHub
 
-Toda a implementação da linguagem C+-, assim como esta documentação, estão disponíveis em: https://github.com/jgkzanella/cpm-lang.
+Toda a implementação da linguagem C+-, assim como esta documentação, estão disponíveis em: <a href="https://github.com/jgkzanella/cpm-lang">jgkzanella/cpm-lang</a>.

@@ -9,9 +9,10 @@ def fatorial(int n) :: int {
 };
 
 def main() :: int {
-    int n != 0;
+    int n = 0;
     read(n);
     n = fatorial(n);
+    x = n;
     print(n);
     return 0;
 };
