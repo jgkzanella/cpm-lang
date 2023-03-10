@@ -1,0 +1,9 @@
+use "stdio";
+
+def main() :: int {
+    int c = 0;
+    read(c);
+    c+-;
+    print(c);
+    return 0;
+};

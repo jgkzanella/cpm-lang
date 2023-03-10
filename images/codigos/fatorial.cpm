@@ -1,0 +1,18 @@
+use "stdio";
+
+def fatorial(int n) :: int {
+    int f = 1;
+    while (n > 1) {
+        f = f * n;
+        n--;
+    }
+    return f;
+};
+
+def main() :: int {
+    int n = 0;
+    read(n);
+    n = fatorial(n);
+    print(n);
+    return 0;
+};

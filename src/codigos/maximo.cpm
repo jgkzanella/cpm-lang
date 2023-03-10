@@ -1,0 +1,21 @@
+use "stdio";
+
+def maximo(int a, int b) :: int {
+    if (a > b) {
+        return a;
+    } else {
+        return b;
+    }
+};
+
+def main() :: int {
+    int a = 0, b = 0;
+    read(a);
+    read(b);
+
+    int max = 0;
+    max = maximo(a, b);
+    print(max);
+
+    return 0;
+};

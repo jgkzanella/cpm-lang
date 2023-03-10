@@ -1,0 +1,9 @@
+use "stdio";
+
+def main() :: int {
+
+    int x = 10;
+    x = "Hello!";
+
+    return 0;
+};

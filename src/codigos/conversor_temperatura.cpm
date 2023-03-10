@@ -1,0 +1,18 @@
+use "stdio";
+
+def Celsius_para_Fahrenheit(float c) :: float {
+    float f = (9.0 * c / 5.0) + 32.0;
+    return f;
+};
+
+def main() :: int {
+
+    float c = 0.0;
+    read(c);
+
+    float f = 0;
+    f = Celsius_para_Fahrenheit(c);
+    print(f);
+
+    return 0;
+};
